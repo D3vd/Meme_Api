@@ -11,7 +11,7 @@ def index():
 
 @app.route('/gimme')
 def one_post():
-    re = get_posts('memes', 20)
+    re = get_posts('memes', 10)
 
     r = random.choice(re)
 
@@ -20,3 +20,12 @@ def one_post():
         'url': r[1],
         'postLink': r[2]
     })
+
+
+@app.route('/sample')
+def sample():
+    re = get_posts('memes', 20)
+
+    r = random.choice(re)
+
+    return render_template('sample.html', title=r[0], img_url=r[1], shortlink=r[2])
