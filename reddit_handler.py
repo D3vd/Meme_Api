@@ -1,4 +1,5 @@
 import praw
+import random
 
 from prawcore.exceptions import Redirect
 from prawcore.exceptions import ResponseException
@@ -10,7 +11,15 @@ class ClientInfo:
     user_agent = 'Meme Api'
 
 
-def get_image_links(sub, limit):
+def is_img_link(link):
+    ext = link[-4:]
+    if ext == '.jpg' or ext == '.png':
+        return True
+    else:
+        return False
+
+
+def get_posts(sub, limit):
 
     try:
         r = praw.Reddit(client_id=ClientInfo.id, client_secret=ClientInfo.secret,
@@ -30,10 +39,3 @@ def get_image_links(sub, limit):
               for submission in submissions]
 
     return result
-
-
-if __name__ == '__main__':
-    r = get_image_links('memes', 10)
-
-    for i in range(0, 10):
-        print('{}. {}\n {}\n {}\n'.format(i+1, r[i][0], r[i][1], r[i][2]))
