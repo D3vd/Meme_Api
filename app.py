@@ -3,6 +3,8 @@ from reddit_handler import *
 
 app = Flask(__name__)
 
+meme_subreddits = ['memes', 'dankmemes', 'meirl']
+
 
 @app.route('/')
 def index():
@@ -11,21 +13,28 @@ def index():
 
 @app.route('/gimme')
 def one_post():
-    re = get_posts('memes', 10)
+    sub = random.choice(meme_subreddits)
+    re = get_posts(sub, 50)
 
     r = random.choice(re)
 
     return jsonify({
         'title': r[0],
         'url': r[1],
-        'postLink': r[2]
+        'postLink': r[2],
+        'subreddit': sub
     })
 
 
 @app.route('/sample')
 def sample():
-    re = get_posts('memes', 20)
+    re = get_posts(random.choice(meme_subreddits), 50)
 
     r = random.choice(re)
 
     return render_template('sample.html', title=r[0], img_url=r[1], shortlink=r[2])
+
+
+@app.route('/<something>')
+def not_found(something):
+    return render_template('not_found.html')
