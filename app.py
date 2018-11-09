@@ -18,6 +18,9 @@ def one_post():
 
     r = random.choice(re)
 
+    while not is_img_link(r[1]):
+        r = random.choice(re)
+
     return jsonify({
         'title': r[0],
         'url': r[1],
@@ -31,6 +34,9 @@ def sample():
     re = get_posts(random.choice(meme_subreddits), 50)
 
     r = random.choice(re)
+
+    while not is_img_link(r[1]):
+        r = random.choice(re)
 
     return render_template('sample.html', title=r[0], img_url=r[1], shortlink=r[2])
 
