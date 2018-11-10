@@ -7,15 +7,31 @@
     <link rel="icon" href="/static/img/icon.jpg">
     <style>
         body{
-            padding: 10px;
+            padding: 30px;
+            background-color: #151515;
+        }
+        .btn-primary{
+            background-color: #6a6a68 !important;
+            border: none;
         }
     </style>
 </head>
     <body>
-        <h1 style="text-align: center;"><a href="{{ shortlink }}" style="color: black">{{ title }}</a></h1>
-        <br>
-        <div  class="container" style="width: 100%; height: 100%">
-            <img src="{{ img_url }}" alt="meme" style="display: block; margin-left: auto; margin-right: auto; width: 50%; height: auto;">
-        </div>
+{#        <h1 style="text-align: center;"><a href="{{ shortlink }}" style="color: whitesmoke">{{ title }}</a></h1>#}
+{#        <br>#}
+{#        <div  class="container" style="width: 100%; height: 100%">#}
+{#            <img src="{{ img_url }}" alt="meme" style="display: block; margin-left: auto; margin-right: auto; width: 50%; height: auto;">#}
+{#        </div>#}
+<div class="container" style="max-width: 500px; margin: auto">
+    <div class="card" style="width: 80%; margin: auto;">
+          <img class="card-img-top" src="{{ img_url }}" alt="meme">
+          <div class="card-body">
+            <h5 class="card-title">{{ title }}</h5>
+            <a href="{{ shortlink }}" class="btn btn-primary" target="_blank">Original Post</a>
+            <input type="button" class="btn btn-primary" value="Reload" onClick="window.location.reload()">
+
+          </div>
+    </div>
+    </div>
     </body>
 </html>
