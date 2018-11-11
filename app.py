@@ -41,6 +41,12 @@ def sample():
     return render_template('sample.html', title=r[0], img_url=r[1], shortlink=r[2])
 
 
+@app.route('/test')
+def test():
+    re = get_posts(random.choice(meme_subreddits), 50)
+
+    return render_template('test.html', re=re)
+
 @app.route('/<something>')
 def not_found(something):
     return render_template('not_found.html')

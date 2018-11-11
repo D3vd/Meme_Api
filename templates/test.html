@@ -67,7 +67,14 @@
         </div>
     </nav>
 
-
+<div class="container" style="margin-top: 200px;">
+    {% for meme in re %}
+        <div style="background-color: darkblue; margin: 10px; padding: 10px; width: 520px;">
+        <p style="color: whitesmoke;">{{ meme[0] }}</p>
+            <img src="{{ meme[1] }}" style="max-width: 500px;" alt="meme">
+        </div>
+    {% endfor %}
+</div>
 
 
 </body>
