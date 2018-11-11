@@ -8,9 +8,20 @@
     <link rel="icon" href="/static/img/icon.jpg">
 <link href="https://fonts.googleapis.com/css?family=Kumar+One+Outline" rel="stylesheet">
     <style>
-        body{
-            background: #fbb9f5 url(/static/img/bg.gif) no-repeat center center fixed;
-            background-size: cover;
+        body:before {
+          content: "";
+          display: block;
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -10;
+          background: url(/static/img/bg.gif) no-repeat center center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
         }
         .navbar{
             background: transparent !important;
