@@ -3,7 +3,7 @@ from reddit_handler import *
 
 app = Flask(__name__)
 
-meme_subreddits = ['memes', 'dankmemes', 'meirl']
+meme_subreddits = ['memes', 'dankmemes', 'meirl','pewdiepiesubmissions']
 
 
 @app.route('/')
@@ -14,7 +14,7 @@ def index():
 @app.route('/gimme')
 def one_post():
     sub = random.choice(meme_subreddits)
-    re = get_posts(sub, 50)
+    re = get_posts(sub, 100)
 
     r = random.choice(re)
 
@@ -31,7 +31,7 @@ def one_post():
 
 @app.route('/sample')
 def sample():
-    re = get_posts(random.choice(meme_subreddits), 50)
+    re = get_posts(random.choice(meme_subreddits), 100)
 
     r = random.choice(re)
 
@@ -43,9 +43,10 @@ def sample():
 
 @app.route('/test')
 def test():
-    re = get_posts(random.choice(meme_subreddits), 50)
+    re = get_posts(random.choice(meme_subreddits), 100)
 
     return render_template('test.html', re=re)
+
 
 @app.route('/<something>')
 def not_found(something):
