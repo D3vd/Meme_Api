@@ -3,7 +3,7 @@ from reddit_handler import *
 
 app = Flask(__name__)
 
-meme_subreddits = ['memes', 'dankmemes', 'meirl','pewdiepiesubmissions']
+meme_subreddits = ['memes', 'dankmemes', 'meirl', 'pewdiepiesubmissions']
 
 
 @app.route('/')
@@ -18,32 +18,33 @@ def one_post():
 
     r = random.choice(re)
 
-    while not is_img_link(r[1]):
+    while not is_img_link(r["url"]):
         r = random.choice(re)
 
     return jsonify({
-        'title': r[0],
-        'url': r[1],
-        'postLink': r[2],
+        'title': r["title"],
+        'url': r["url"],
+        'postLink': r["link"],
         'subreddit': sub
     })
+
 
 @app.route('/gimme/<subreddit>')
 def one_post_from_sub(subreddit):
-    sub = subreddit
-    re = get_posts(sub, 100)
+    re = get_posts(subreddit, 100)
 
     r = random.choice(re)
 
-    while not is_img_link(r[1]):
+    while not is_img_link(r["url"]):
         r = random.choice(re)
 
     return jsonify({
-        'title': r[0],
-        'url': r[1],
-        'postLink': r[2],
-        'subreddit': sub
+        'title': r["title"],
+        'url': r["url"],
+        'postLink': r["link"],
+        'subreddit': subreddit
     })
+
 
 @app.route('/sample')
 def sample():
@@ -51,7 +52,7 @@ def sample():
 
     r = random.choice(re)
 
-    while not is_img_link(r[1]):
+    while not is_img_link(r["url"]):
         r = random.choice(re)
 
     return render_template('sample.html', title=r[0], img_url=r[1], shortlink=r[2])

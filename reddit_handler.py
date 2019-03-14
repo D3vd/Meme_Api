@@ -35,7 +35,7 @@ def get_posts(sub, limit):
         print("Client info is wrong. Check again.")
         return 0
 
-    result = [[submission.title, submission.url, submission.shortlink]
+    result = [{"title": submission.title, "url": submission.url, "link": submission.shortlink}
               for submission in submissions]
 
     return result
