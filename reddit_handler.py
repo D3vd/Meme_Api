@@ -21,21 +21,14 @@ def is_img_link(link):
 
 def get_posts(sub, limit):
 
-    try:
-        r = praw.Reddit(client_id=ClientInfo.id, client_secret=ClientInfo.secret,
-                        user_agent=ClientInfo.user_agent)
+    r = praw.Reddit(client_id=ClientInfo.id, client_secret=ClientInfo.secret,
+                    user_agent=ClientInfo.user_agent)
 
-        submissions = r.subreddit(sub).hot(limit=limit)
+    submissions = r.subreddit(sub).hot(limit=limit)
 
-    except Redirect:
-        print("Invalid Subreddit!")
-        return 0
-
-    except ResponseException:
-        print("Client info is wrong. Check again.")
-        return 0
-
-    result = [{"title": submission.title, "url": submission.url, "link": submission.shortlink}
+    result = [{"title": submission.title,
+               "url": submission.url,
+               "link": submission.shortlink}
               for submission in submissions]
 
     return result

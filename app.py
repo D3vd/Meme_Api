@@ -14,7 +14,14 @@ def index():
 @app.route('/gimme')
 def one_post():
     sub = random.choice(meme_subreddits)
-    re = get_posts(sub, 100)
+    try:
+        re = get_posts(sub, 100)
+
+    except ResponseException:
+        return jsonify({
+            'status_code': 500,
+            'message': 'Internal Server Error'
+        })
 
     r = random.choice(re)
 
@@ -31,7 +38,20 @@ def one_post():
 
 @app.route('/gimme/<subreddit>')
 def one_post_from_sub(subreddit):
-    re = get_posts(subreddit, 100)
+    try:
+        re = get_posts(subreddit, 100)
+
+    except Redirect:
+        return jsonify({
+            'status_code': 404,
+            'message': 'Invalid Subreddit'
+        })
+
+    except ResponseException:
+        return jsonify({
+            'status_code': 500,
+            'message': 'Internal Server Error'
+        })
 
     r = random.choice(re)
 
@@ -55,7 +75,7 @@ def sample():
     while not is_img_link(r["url"]):
         r = random.choice(re)
 
-    return render_template('sample.html', title=r[0], img_url=r[1], shortlink=r[2])
+    return render_template('sample.html', title=r["title"], img_url=r["url"], shortlink=r["link"])
 
 
 @app.route('/test')
