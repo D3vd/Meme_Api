@@ -19,3 +19,13 @@ API Link : https://meme-api.herokuapp.com/gimme
 
 
 
+## Custom Endpoints
+
+#### Specify Subreddit: 
+
+By default the API grabs a random meme from '*memes*', '*dankmemes*', '*meirl*', '*pewdiepiesubmissions*' subreddits. To provide your own custom subreddit use the following endpoint.
+
+Endpoint: [/gimme/{subreddit}](https://meme-api.herokuapp.com/gimme/dankmemes)
+
+Example:  https://meme-api.herokuapp.com/gimme/dankmemes
+
