@@ -28,6 +28,22 @@ def one_post():
         'subreddit': sub
     })
 
+@app.route('/gimme/<subreddit>')
+def one_post_from_sub(subreddit):
+    sub = subreddit
+    re = get_posts(sub, 100)
+
+    r = random.choice(re)
+
+    while not is_img_link(r[1]):
+        r = random.choice(re)
+
+    return jsonify({
+        'title': r[0],
+        'url': r[1],
+        'postLink': r[2],
+        'subreddit': sub
+    })
 
 @app.route('/sample')
 def sample():
