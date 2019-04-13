@@ -1,7 +1,11 @@
 from flask import Flask, render_template, jsonify
+from flask_cors import CORS, cross_origin
+
 from reddit_handler import *
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 meme_subreddits = ['memes', 'dankmemes', 'meirl']
 
@@ -12,6 +16,7 @@ def index():
 
 
 @app.route('/gimme')
+@cross_origin()
 def one_post():
     sub = random.choice(meme_subreddits)
     try:
@@ -37,6 +42,7 @@ def one_post():
 
 
 @app.route('/gimme/<subreddit>')
+@cross_origin()
 def one_post_from_sub(subreddit):
     try:
         re = get_posts(subreddit, 100)
