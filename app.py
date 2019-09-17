@@ -82,7 +82,7 @@ def multiple_posts(count):
 
     return jsonify({
         'memes': memes,
-        'count': count
+        'count': len(memes)
     })
 
 
@@ -161,7 +161,7 @@ def multiple_posts_from_sub(subreddit, count):
 
     return jsonify({
         'memes': memes,
-        'count': count,
+        'count': len(memes),
         'subreddit': subreddit
     })
 
