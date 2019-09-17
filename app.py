@@ -72,6 +72,49 @@ def one_post_from_sub(subreddit):
     })
 
 
+@app.route('/gimme/<subreddit>/<int:count>')
+@cross_origin()
+def multiple_post_from_sub(subreddit, count):
+
+    if count > 100:
+        return jsonify({
+            'status_code': 400,
+            'message': 'Please ensure the count is less than 100'
+        })
+
+    try:
+        re = get_posts(subreddit, count)
+
+    except Redirect:
+        return jsonify({
+            'status_code': 404,
+            'message': 'Invalid Subreddit'
+        })
+
+    except ResponseException:
+        return jsonify({
+            'status_code': 500,
+            'message': 'Internal Server Error'
+        })
+
+    memes = []
+
+    for post in re:
+        temp = {
+            'title': post["title"],
+            'url': post["url"],
+            'postLink': post["link"]
+        }
+
+        memes.append(temp)
+
+    return jsonify({
+        'memes': memes,
+        'count': count,
+        'subreddit': subreddit
+    })
+
+
 @app.route('/sample')
 def sample():
     re = get_posts(random.choice(meme_subreddits), 100)
@@ -91,6 +134,7 @@ def test():
     return render_template('test.html', re=re)
 
 
+@app.errorhandler(404)
 @app.route('/<something>')
 def not_found(something):
     return render_template('not_found.html')
