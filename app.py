@@ -54,7 +54,7 @@ def multiple_posts(count):
     sub = random.choice(meme_subreddits)
 
     try:
-        re = get_posts(sub, count)
+        re = get_posts(sub, 100)
 
     except ResponseException:
         return jsonify({
@@ -62,17 +62,23 @@ def multiple_posts(count):
             'message': 'Internal Server Error'
         })
 
+    random.shuffle(re)
+
     memes = []
 
     for post in re:
-        temp = {
-            'title': post["title"],
-            'url': post["url"],
-            'postLink': post["link"],
-            'subreddit': sub
-        }
+        if len(memes) == count:
+            break
 
-        memes.append(temp)
+        if is_img_link(post['url']):
+            temp = {
+                'title': post["title"],
+                'url': post["url"],
+                'postLink': post["link"],
+                'subreddit': sub
+            }
+
+            memes.append(temp)
 
     return jsonify({
         'memes': memes,
@@ -122,7 +128,7 @@ def multiple_posts_from_sub(subreddit, count):
         })
 
     try:
-        re = get_posts(subreddit, count)
+        re = get_posts(subreddit, 100)
 
     except Redirect:
         return jsonify({
@@ -136,16 +142,22 @@ def multiple_posts_from_sub(subreddit, count):
             'message': 'Internal Server Error'
         })
 
+    random.shuffle(re)
+
     memes = []
 
     for post in re:
-        temp = {
-            'title': post["title"],
-            'url': post["url"],
-            'postLink': post["link"]
-        }
+        if len(memes) == count:
+            break
 
-        memes.append(temp)
+        if is_img_link(post['url']):
+            temp = {
+                'title': post["title"],
+                'url': post["url"],
+                'postLink': post["link"]
+            }
+
+            memes.append(temp)
 
     return jsonify({
         'memes': memes,
