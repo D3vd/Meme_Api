@@ -41,6 +41,45 @@ def one_post():
     })
 
 
+@app.route('/gimme/<int:count>')
+@cross_origin()
+def multiple_posts(count):
+
+    if count > 100:
+        return jsonify({
+            'status_code': 400,
+            'message': 'Please ensure the count is less than 100'
+        })
+
+    sub = random.choice(meme_subreddits)
+
+    try:
+        re = get_posts(sub, count)
+
+    except ResponseException:
+        return jsonify({
+            'status_code': 500,
+            'message': 'Internal Server Error'
+        })
+
+    memes = []
+
+    for post in re:
+        temp = {
+            'title': post["title"],
+            'url': post["url"],
+            'postLink': post["link"],
+            'subreddit': sub
+        }
+
+        memes.append(temp)
+
+    return jsonify({
+        'memes': memes,
+        'count': count
+    })
+
+
 @app.route('/gimme/<subreddit>')
 @cross_origin()
 def one_post_from_sub(subreddit):
@@ -74,7 +113,7 @@ def one_post_from_sub(subreddit):
 
 @app.route('/gimme/<subreddit>/<int:count>')
 @cross_origin()
-def multiple_post_from_sub(subreddit, count):
+def multiple_posts_from_sub(subreddit, count):
 
     if count > 100:
         return jsonify({
