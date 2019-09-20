@@ -13,5 +13,5 @@ prawcore==1.0.0
 requests==2.22.0
 six==1.12.0
 update-checker==0.16
-urllib3==1.25.3
+urllib3==1.25.5
 Werkzeug==0.15.4
