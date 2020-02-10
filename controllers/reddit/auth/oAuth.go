@@ -20,7 +20,7 @@ func GetAccessToken() (accessToken string) {
 	clientSecret := os.Getenv("REDDIT_CLIENT_SECRET")
 
 	// Set User Agent
-	userAgent := ""
+	userAgent := "MEME_API"
 
 	// Combine client ID and Secret and then Encode them to base64
 	data := clientID + ":" + clientSecret

@@ -6,10 +6,13 @@ import (
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/reddit/auth"
 )
 
-func GetMemes() {
+func GetMemes(subreddit string) {
 
 	accessToken := auth.GetAccessToken()
+	url := GetSubredditURL(subreddit, 1)
 
-	log.Println(accessToken)
+	body := MakeGetRequest(url, accessToken)
+
+	log.Println(string(body))
 
 }
