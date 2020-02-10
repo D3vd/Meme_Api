@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// NewRouter : Function with routes
 func NewRouter() *gin.Engine {
 	router := gin.New()
 

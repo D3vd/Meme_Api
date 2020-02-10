@@ -13,7 +13,8 @@ type GimmeController struct{}
 
 // GetOneRandomMeme : Returns a single meme from a random subreddit
 func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"Test": "Hello World"})
-	reddit.GetMemes("memes")
+	memes := reddit.GetMemes("memes")
+
+	c.JSON(http.StatusOK, memes[0])
 	return
 }
