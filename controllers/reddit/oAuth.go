@@ -1,30 +1,19 @@
-package auth
+package reddit
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
 	models "github.com/R3l3ntl3ss/Meme_Api/models/reddit"
 )
 
 // GetAccessToken : Get temporary Access Token based on App client ID and Secret
-func GetAccessToken() (accessToken string) {
+func (r *Reddit) GetAccessToken() (accessToken string) {
 
-	// Get Reddit Client Credentials from the environment variables
-	clientID := os.Getenv("REDDIT_CLIENT_ID")
-	clientSecret := os.Getenv("REDDIT_CLIENT_SECRET")
-
-	// Set User Agent
-	userAgent := "MEME_API"
-
-	// Combine client ID and Secret and then Encode them to base64
-	data := clientID + ":" + clientSecret
-	encodedCredentials := base64.StdEncoding.EncodeToString([]byte(data))
+	encodedCredentials := r.EncodeCredentials()
 
 	// Reddit URL to get access token
 	url := "https://www.reddit.com/api/v1/access_token"
@@ -35,7 +24,7 @@ func GetAccessToken() (accessToken string) {
 	req, _ := http.NewRequest("POST", url, payload)
 
 	// Set Headers including the User Agent and the Authorization with the encoded credentials
-	req.Header.Add("User-Agent", userAgent)
+	req.Header.Add("User-Agent", r.UserAgent)
 	req.Header.Add("Authorization", "Basic "+encodedCredentials)
 	req.Header.Add("Accept", "*/*")
 	req.Header.Add("Cache-Control", "no-cache")
@@ -49,8 +38,9 @@ func GetAccessToken() (accessToken string) {
 	// Make Request
 	res, err := http.DefaultClient.Do(req)
 
-	if err != nil {
+	if err != nil || res == nil {
 		log.Println("Error while making connecting to : " + url)
+		return
 	}
 
 	// Close the response body
