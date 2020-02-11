@@ -1,10 +1,9 @@
 package server
 
 import (
-	"github.com/gin-gonic/gin"
-
 	"github.com/R3l3ntl3ss/Meme_Api/controllers"
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/reddit"
+	"github.com/gin-gonic/gin"
 )
 
 // NewRouter : Function with routes
@@ -20,11 +19,14 @@ func NewRouter() *gin.Engine {
 
 	gimme := router.Group("gimme")
 	{
-		meme := controllers.GimmeController{
+		g := controllers.GimmeController{
 			R: r,
 		}
 
-		gimme.GET("/", meme.GetOneRandomMeme)
+		gimme.GET("/", g.GetOneRandomMeme)
+
+		gimme.GET("/:interface/", g.SubredditOrCount)
+
 	}
 
 	return router

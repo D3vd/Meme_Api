@@ -1,12 +1,13 @@
 package controllers
 
 import (
-	"github.com/R3l3ntl3ss/Meme_Api/data"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/reddit"
+	"github.com/R3l3ntl3ss/Meme_Api/data"
 )
 
 // GimmeController : Gives random meme(s) through /gimme endpoint
@@ -27,5 +28,41 @@ func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
 	meme := memes[GetRandomN(len(memes))]
 
 	c.JSON(http.StatusOK, meme)
+	return
+}
+
+// GetNRandomMemes : Returns N no. of memes from a random subreddit
+func (g GimmeController) GetNRandomMemes(c *gin.Context) {
+
+	count, _ := strconv.Atoi(c.Param("interface"))
+
+	// Check if the count is less than 50
+	if count > 50 {
+		count = 50
+	}
+
+	// Choose a random meme subreddit
+	sub := data.MemeSubreddits[GetRandomN(len(data.MemeSubreddits))]
+
+	// Get 50 posts from that subreddit
+	memes := g.R.GetNPosts(sub, 50)
+
+	// Get N no. of posts from that list
+	memes = GetNRandomMemes(memes, count)
+
+	c.JSON(http.StatusOK, memes)
+	return
+}
+
+// SubredditOrCount : Find if the route is /<subreddit>/ or /<count>/
+func (g GimmeController) SubredditOrCount(c *gin.Context) {
+	route := c.Param("interface")
+
+	if _, err := strconv.Atoi(route); err == nil {
+		g.GetNRandomMemes(c)
+	} else {
+		c.JSON(200, "It is string")
+	}
+
 	return
 }
