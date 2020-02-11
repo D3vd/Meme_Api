@@ -8,6 +8,7 @@ import (
 
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/reddit"
 	"github.com/R3l3ntl3ss/Meme_Api/data"
+	"github.com/R3l3ntl3ss/Meme_Api/models/response"
 )
 
 // GimmeController : Gives random meme(s) through /gimme endpoint
@@ -27,7 +28,37 @@ func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
 	// Choose one post from the list
 	meme := memes[GetRandomN(len(memes))]
 
-	c.JSON(http.StatusOK, meme)
+	response := response.OneMemeResponse{
+		PostLink:  meme.PostLink,
+		Subreddit: meme.SubReddit,
+		Title:     meme.Title,
+		URL:       meme.URL,
+	}
+
+	c.JSON(http.StatusOK, response)
+	return
+}
+
+// GetOnePostFromSub : Get one post from a specific subreddit
+func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
+
+	sub := c.Param("interface")
+
+	// Get 50 posts from that Subreddit
+	memes := g.R.GetNPosts(sub, 50)
+
+	// Choose one post from the list
+	meme := memes[GetRandomN(len(memes))]
+
+	// TODO: Create custom response and error handling
+
+	response := response.OneMemeResponse{
+		PostLink:  meme.PostLink,
+		Subreddit: meme.SubReddit,
+		Title:     meme.Title,
+		URL:       meme.URL,
+	}
+	c.JSON(http.StatusOK, response)
 	return
 }
 
@@ -52,22 +83,6 @@ func (g GimmeController) GetNRandomMemes(c *gin.Context) {
 
 	// TODO: Create a custom response model
 	c.JSON(http.StatusOK, memes)
-	return
-}
-
-// GetOnePostFromSub : Get one post from a specific subreddit
-func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
-
-	sub := c.Param("interface")
-
-	// Get 50 posts from that Subreddit
-	memes := g.R.GetNPosts(sub, 50)
-
-	// Choose one post from the list
-	meme := memes[GetRandomN(len(memes))]
-
-	// TODO: Create custom response and error handling
-	c.JSON(http.StatusOK, meme)
 	return
 }
 
