@@ -55,6 +55,7 @@ func (g GimmeController) GetNRandomMemes(c *gin.Context) {
 	return
 }
 
+// GetOnePostFromSub : Get one post from a specific subreddit
 func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
 
 	sub := c.Param("interface")
@@ -67,6 +68,34 @@ func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
 
 	// TODO: Create custom response and error handling
 	c.JSON(http.StatusOK, meme)
+	return
+}
+
+// GetNPostsFromSub : Get N no. of posts from a specific subreddit
+func (g GimmeController) GetNPostsFromSub(c *gin.Context) {
+
+	sub := c.Param("interface")
+	count, err := strconv.Atoi(c.Param("count"))
+
+	if err != nil {
+		// TODO: Handle Error properly
+		c.JSON(http.StatusBadRequest, "Give proper count value")
+		return
+	}
+
+	// Check if the count is less than 50
+	if count > 50 {
+		count = 50
+	}
+
+	// Get 50 posts from that subreddit
+	memes := g.R.GetNPosts(sub, 50)
+
+	// Get N no. of posts from that list
+	memes = GetNRandomMemes(memes, count)
+
+	// TODO: Create a custom response model
+	c.JSON(http.StatusOK, memes)
 	return
 }
 

@@ -27,6 +27,7 @@ func NewRouter() *gin.Engine {
 
 		gimme.GET("/:interface/", g.SubredditOrCount)
 
+		gimme.GET("/:interface/:count/", g.GetNPostsFromSub)
 	}
 
 	return router
