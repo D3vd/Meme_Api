@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// Reddit : Reddit structure with reddit credentials
 type Reddit struct {
 	AccessToken  string `json:"access_token"`
 	ClientID     string `json:"client_id"`
@@ -12,6 +13,7 @@ type Reddit struct {
 	UserAgent    string `json:"user_agent"`
 }
 
+// Init : Initialize the Reddit Structure with App Credentials
 func (r *Reddit) Init() {
 	// Get Reddit Client Credentials from the environment variables
 	clientID := os.Getenv("REDDIT_CLIENT_ID")
@@ -27,4 +29,12 @@ func (r *Reddit) Init() {
 
 	r.UserAgent = "MEME_API"
 
+	accessToken := r.GetAccessToken()
+
+	if accessToken == "" {
+		log.Fatalln("Error while getting Access Token")
+		return
+	}
+
+	r.AccessToken = accessToken
 }

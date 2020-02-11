@@ -38,9 +38,9 @@ func (r *Reddit) GetAccessToken() (accessToken string) {
 	// Make Request
 	res, err := http.DefaultClient.Do(req)
 
-	if err != nil || res == nil {
+	if err != nil {
 		log.Println("Error while making connecting to : " + url)
-		return
+		return ""
 	}
 
 	// Close the response body
