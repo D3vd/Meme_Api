@@ -81,8 +81,25 @@ func (g GimmeController) GetNRandomMemes(c *gin.Context) {
 	// Get N no. of posts from that list
 	memes = GetNRandomMemes(memes, count)
 
-	// TODO: Create a custom response model
-	c.JSON(http.StatusOK, memes)
+	var memesResponse []response.OneMemeResponse
+
+	for _, meme := range memes {
+		memeResponse := response.OneMemeResponse{
+			PostLink:  meme.PostLink,
+			Subreddit: meme.SubReddit,
+			Title:     meme.Title,
+			URL:       meme.URL,
+		}
+
+		memesResponse = append(memesResponse, memeResponse)
+	}
+
+	response := response.MultipleMemesResponse{
+		Count: len(memesResponse),
+		Memes: memesResponse,
+	}
+
+	c.JSON(http.StatusOK, response)
 	return
 }
 
@@ -109,8 +126,25 @@ func (g GimmeController) GetNPostsFromSub(c *gin.Context) {
 	// Get N no. of posts from that list
 	memes = GetNRandomMemes(memes, count)
 
-	// TODO: Create a custom response model
-	c.JSON(http.StatusOK, memes)
+	var memesResponse []response.OneMemeResponse
+
+	for _, meme := range memes {
+		memeResponse := response.OneMemeResponse{
+			PostLink:  meme.PostLink,
+			Subreddit: meme.SubReddit,
+			Title:     meme.Title,
+			URL:       meme.URL,
+		}
+
+		memesResponse = append(memesResponse, memeResponse)
+	}
+
+	response := response.MultipleMemesResponse{
+		Count: len(memesResponse),
+		Memes: memesResponse,
+	}
+
+	c.JSON(http.StatusOK, response)
 	return
 }
 
