@@ -2,23 +2,25 @@ package reddit
 
 import (
 	"encoding/json"
+	"log"
 
-	"github.com/R3l3ntl3ss/Meme_Api/controllers/reddit/auth"
 	"github.com/R3l3ntl3ss/Meme_Api/models"
 
 	redditModels "github.com/R3l3ntl3ss/Meme_Api/models/reddit"
 )
 
-func GetMemes(subreddit string) []models.Meme {
+func (r Reddit) GetNPosts(subreddit string, count int) []models.Meme {
 
-	accessToken := auth.GetAccessToken()
-	url := GetSubredditURL(subreddit, 10)
+	url := GetSubredditAPIURL(subreddit, count)
 
-	body := MakeGetRequest(url, accessToken)
+	body := r.MakeGetRequest(url)
 
 	var redditResponse redditModels.RedditResponse
 
-	json.Unmarshal(body, &redditResponse)
+	if err := json.Unmarshal(body, &redditResponse); err != nil {
+		log.Println("Error while Parsing Reddit Response")
+		return nil
+	}
 
 	var memes []models.Meme
 
