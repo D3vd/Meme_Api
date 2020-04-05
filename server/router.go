@@ -14,7 +14,7 @@ func NewRouter() *gin.Engine {
 	router.Use(gin.Recovery())
 
 	// Create a Reddit Object and Initialize it
-	var r reddit.Reddit
+	r := &reddit.Reddit{}
 	r.Init()
 
 	gimme := router.Group("gimme")
