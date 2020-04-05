@@ -16,7 +16,7 @@ func (r *Reddit) EncodeCredentials() (encodedCredentials string) {
 }
 
 // MakeGetRequest : Makes a GET Request to Reddit API with Access Token
-func (r *Reddit) MakeGetRequest(url string) (responseBody []byte) {
+func (r *Reddit) MakeGetRequest(url string) (responseBody []byte, errorCode int) {
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("Authorization", "Bearer "+r.AccessToken)
@@ -31,7 +31,7 @@ func (r *Reddit) MakeGetRequest(url string) (responseBody []byte) {
 
 	if err != nil {
 		log.Println("Error while making request", err)
-		return nil
+		return nil, res.StatusCode
 	}
 	// Close the response body
 	defer res.Body.Close()
@@ -39,7 +39,7 @@ func (r *Reddit) MakeGetRequest(url string) (responseBody []byte) {
 	// Read the response
 	body, _ := ioutil.ReadAll(res.Body)
 
-	return body
+	return body, res.StatusCode
 }
 
 // GetSubredditAPIURL : Returns API Reddit URL with Limit

@@ -10,11 +10,20 @@ import (
 )
 
 // GetNPosts : Get (N) no. of posts from Reddit with Subreddit Name and Limit
-func (r Reddit) GetNPosts(subreddit string, count int) []models.Meme {
+func (r *Reddit) GetNPosts(subreddit string, count int) []models.Meme {
 
 	url := GetSubredditAPIURL(subreddit, count)
 
-	body := r.MakeGetRequest(url)
+	body, statusCode := r.MakeGetRequest(url)
+
+	// Check if the access Token has been expired
+	if statusCode == 401 {
+		// Get new access token
+		r.GetNewAccessToken()
+
+		// Make request Again
+		body, _ = r.MakeGetRequest(url)
+	}
 
 	var redditResponse redditModels.RedditResponse
 

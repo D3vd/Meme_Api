@@ -39,7 +39,7 @@ func (r *Reddit) Init() {
 	r.AccessToken = accessToken
 }
 
-// GetNewAccessToken : Function to get New Access Token once the old one expires
+// GetNewAccessToken : Function to Generate New Access Token once the old one expires
 func (r *Reddit) GetNewAccessToken() (ok bool) {
 	newAccessToken := r.GetAccessToken()
 
