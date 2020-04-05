@@ -42,7 +42,7 @@ func (r *Reddit) MakeGetRequest(url string) (responseBody []byte) {
 	return body
 }
 
-// GetSubredditURL : Returns API Reddit URL with Limit
+// GetSubredditAPIURL : Returns API Reddit URL with Limit
 func GetSubredditAPIURL(subreddit string, limit int) (url string) {
 	url = "https://oauth.reddit.com/r/" + subreddit + "/hot?limit=" + strconv.Itoa(limit)
 	return

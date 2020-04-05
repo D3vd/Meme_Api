@@ -38,3 +38,16 @@ func (r *Reddit) Init() {
 
 	r.AccessToken = accessToken
 }
+
+// GetNewAccessToken : Function to get New Access Token once the old one expires
+func (r *Reddit) GetNewAccessToken() (ok bool) {
+	newAccessToken := r.GetAccessToken()
+
+	if newAccessToken == "" {
+		log.Println("Unable to get new Access Token")
+		return false
+	}
+
+	r.AccessToken = newAccessToken
+	return true
+}
