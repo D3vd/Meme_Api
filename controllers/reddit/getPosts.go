@@ -18,7 +18,7 @@ func (r Reddit) GetNPosts(subreddit string, count int) []models.Meme {
 	var redditResponse redditModels.RedditResponse
 
 	if err := json.Unmarshal(body, &redditResponse); err != nil {
-		log.Println("Error while Parsing Reddit Response")
+		log.Println("Error while Parsing Reddit Response", err)
 		return nil
 	}
 

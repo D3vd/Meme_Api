@@ -25,6 +25,17 @@ func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
 	// Get 50 posts from that Subreddit
 	memes := g.R.GetNPosts(sub, 50)
 
+	// Check if memes is nil because of error
+	if memes == nil {
+		response := response.Error{
+			Code:    500,
+			Message: "Error while getting memes from subreddit. Please try again",
+		}
+
+		c.JSON(http.StatusServiceUnavailable, response)
+		return
+	}
+
 	// Choose one post from the list
 	meme := memes[GetRandomN(len(memes))]
 
@@ -47,10 +58,19 @@ func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
 	// Get 50 posts from that Subreddit
 	memes := g.R.GetNPosts(sub, 50)
 
+	// Check if memes is nil because of error
+	if memes == nil {
+		response := response.Error{
+			Code:    500,
+			Message: "Error while getting memes from subreddit. Please try again",
+		}
+
+		c.JSON(http.StatusServiceUnavailable, response)
+		return
+	}
+
 	// Choose one post from the list
 	meme := memes[GetRandomN(len(memes))]
-
-	// TODO: Create custom response and error handling
 
 	response := response.OneMemeResponse{
 		PostLink:  meme.PostLink,
@@ -58,6 +78,7 @@ func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
 		Title:     meme.Title,
 		URL:       meme.URL,
 	}
+
 	c.JSON(http.StatusOK, response)
 	return
 }
