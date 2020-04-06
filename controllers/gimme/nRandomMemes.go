@@ -29,7 +29,7 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that subreddit
-		memes := g.R.GetNPosts(sub, 50)
+		memes = g.R.GetNPosts(sub, 50)
 
 		// Check if memes is nil because of error
 		if memes == nil {
@@ -45,6 +45,7 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 		// Remove Non Image posts from the Array
 		memes = utils.RemoveNonImagePosts(memes)
 
+		// Write sub posts to Cache
 		g.Cache.WritePostsToCache(sub, memes)
 	}
 

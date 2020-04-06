@@ -38,6 +38,7 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 		// Remove Non Image posts from the Array
 		memes = utils.RemoveNonImagePosts(memes)
 
+		// Write sub posts to Cache
 		g.Cache.WritePostsToCache(sub, memes)
 	}
 
