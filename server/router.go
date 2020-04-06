@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/R3l3ntl3ss/Meme_Api/controllers"
-	"github.com/R3l3ntl3ss/Meme_Api/controllers/reddit"
+	"github.com/R3l3ntl3ss/Meme_Api/libraries/reddit"
 	"github.com/gin-gonic/gin"
 )
 
