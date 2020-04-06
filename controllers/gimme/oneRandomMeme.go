@@ -16,6 +16,8 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 	// Choose Random Meme Subreddit
 	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
+	// TODO -- Check if the subreddit data is present in Cache
+
 	// Get 50 posts from that Subreddit
 	memes := g.R.GetNPosts(sub, 50)
 
@@ -32,6 +34,10 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 
 	// Remove Non Image posts from the Array
 	memes = utils.RemoveNonImagePosts(memes)
+
+	// TODO -- Write subreddit posts to Cache
+
+	g.Cache.WritePostsToCache(sub, memes)
 
 	// Check if the Memes list has any posts
 	if len(memes) == 0 {
