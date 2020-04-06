@@ -1,4 +1,4 @@
-package models
+package reddit
 
 // AccessTokenBody : Model for Reddit AccessBody Response
 type AccessTokenBody struct {

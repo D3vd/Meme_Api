@@ -29,10 +29,10 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	// Get N no. of posts from that list
 	memes = utils.GetNRandomMemes(memes, count)
 
-	var memesResponse []response.OneMemeResponse
+	var memesResponse []response.OneMeme
 
 	for _, meme := range memes {
-		memeResponse := response.OneMemeResponse{
+		memeResponse := response.OneMeme{
 			PostLink:  meme.PostLink,
 			Subreddit: meme.SubReddit,
 			Title:     meme.Title,
@@ -42,7 +42,7 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 		memesResponse = append(memesResponse, memeResponse)
 	}
 
-	response := response.MultipleMemesResponse{
+	response := response.MultipleMemes{
 		Count: len(memesResponse),
 		Memes: memesResponse,
 	}

@@ -6,7 +6,7 @@ import (
 
 	"github.com/R3l3ntl3ss/Meme_Api/models"
 
-	redditModels "github.com/R3l3ntl3ss/Meme_Api/models/reddit"
+	"github.com/R3l3ntl3ss/Meme_Api/models/reddit"
 )
 
 // GetNPosts : Get (N) no. of posts from Reddit with Subreddit Name and Limit
@@ -25,7 +25,7 @@ func (r *Reddit) GetNPosts(subreddit string, count int) []models.Meme {
 		body, _ = r.MakeGetRequest(url)
 	}
 
-	var redditResponse redditModels.RedditResponse
+	var redditResponse reddit.Response
 
 	if err := json.Unmarshal(body, &redditResponse); err != nil {
 		log.Println("Error while Parsing Reddit Response")

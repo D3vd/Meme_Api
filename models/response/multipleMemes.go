@@ -1,7 +1,7 @@
 package response
 
-// MultipleMemesResponse : Response for multiple Memes
-type MultipleMemesResponse struct {
-	Count int               `json:"count"`
-	Memes []OneMemeResponse `json:"memes"`
+// MultipleMemes : Response for multiple Memes
+type MultipleMemes struct {
+	Count int       `json:"count"`
+	Memes []OneMeme `json:"memes"`
 }

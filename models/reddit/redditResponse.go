@@ -1,7 +1,7 @@
-package models
+package reddit
 
-// RedditResponse : Main container for the Reddit Response
-type RedditResponse struct {
+// Response : Main container for the Reddit Response
+type Response struct {
 	Kind string   `json:"kind"`
 	Data MainData `json:"data"`
 }

@@ -33,7 +33,7 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]
 
-	response := response.OneMemeResponse{
+	response := response.OneMeme{
 		PostLink:  meme.PostLink,
 		Subreddit: meme.SubReddit,
 		Title:     meme.Title,

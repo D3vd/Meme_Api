@@ -1,7 +1,7 @@
 package response
 
-// OneMemeResponse : Response for a single Meme
-type OneMemeResponse struct {
+// OneMeme : Response for a single Meme
+type OneMeme struct {
 	PostLink  string `json:"postLink"`
 	Subreddit string `json:"subreddit"`
 	Title     string `json:"title"`
