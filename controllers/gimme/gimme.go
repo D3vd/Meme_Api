@@ -1,4 +1,4 @@
-package controllers
+package gimme
 
 import (
 	"net/http"
@@ -6,21 +6,22 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/R3l3ntl3ss/Meme_Api/controllers/utils"
 	"github.com/R3l3ntl3ss/Meme_Api/data"
 	"github.com/R3l3ntl3ss/Meme_Api/libraries/reddit"
 	"github.com/R3l3ntl3ss/Meme_Api/models/response"
 )
 
 // GimmeController : Gives random meme(s) through /gimme endpoint
-type GimmeController struct {
+type Controller struct {
 	R *reddit.Reddit
 }
 
 // GetOneRandomMeme : Returns a single meme from a random subreddit
-func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
+func (g Controller) GetOneRandomMeme(c *gin.Context) {
 
 	// Choose Random Meme Subreddit
-	sub := data.MemeSubreddits[GetRandomN(len(data.MemeSubreddits))]
+	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
 	// Get 50 posts from that Subreddit
 	memes := g.R.GetNPosts(sub, 50)
@@ -37,7 +38,7 @@ func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
 	}
 
 	// Choose one post from the list
-	meme := memes[GetRandomN(len(memes))]
+	meme := memes[utils.GetRandomN(len(memes))]
 
 	response := response.OneMemeResponse{
 		PostLink:  meme.PostLink,
@@ -51,7 +52,7 @@ func (g GimmeController) GetOneRandomMeme(c *gin.Context) {
 }
 
 // GetOnePostFromSub : Get one post from a specific subreddit
-func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
+func (g Controller) GetOnePostFromSub(c *gin.Context) {
 
 	sub := c.Param("interface")
 
@@ -70,7 +71,7 @@ func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
 	}
 
 	// Choose one post from the list
-	meme := memes[GetRandomN(len(memes))]
+	meme := memes[utils.GetRandomN(len(memes))]
 
 	response := response.OneMemeResponse{
 		PostLink:  meme.PostLink,
@@ -84,7 +85,7 @@ func (g GimmeController) GetOnePostFromSub(c *gin.Context) {
 }
 
 // GetNRandomMemes : Returns N no. of memes from a random subreddit
-func (g GimmeController) GetNRandomMemes(c *gin.Context) {
+func (g Controller) GetNRandomMemes(c *gin.Context) {
 
 	count, _ := strconv.Atoi(c.Param("interface"))
 
@@ -94,13 +95,13 @@ func (g GimmeController) GetNRandomMemes(c *gin.Context) {
 	}
 
 	// Choose a random meme subreddit
-	sub := data.MemeSubreddits[GetRandomN(len(data.MemeSubreddits))]
+	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
 	// Get 50 posts from that subreddit
 	memes := g.R.GetNPosts(sub, 50)
 
 	// Get N no. of posts from that list
-	memes = GetNRandomMemes(memes, count)
+	memes = utils.GetNRandomMemes(memes, count)
 
 	var memesResponse []response.OneMemeResponse
 
@@ -125,7 +126,7 @@ func (g GimmeController) GetNRandomMemes(c *gin.Context) {
 }
 
 // GetNPostsFromSub : Get N no. of posts from a specific subreddit
-func (g GimmeController) GetNPostsFromSub(c *gin.Context) {
+func (g Controller) GetNPostsFromSub(c *gin.Context) {
 
 	sub := c.Param("interface")
 	count, err := strconv.Atoi(c.Param("count"))
@@ -145,7 +146,7 @@ func (g GimmeController) GetNPostsFromSub(c *gin.Context) {
 	memes := g.R.GetNPosts(sub, 50)
 
 	// Get N no. of posts from that list
-	memes = GetNRandomMemes(memes, count)
+	memes = utils.GetNRandomMemes(memes, count)
 
 	var memesResponse []response.OneMemeResponse
 
@@ -170,7 +171,7 @@ func (g GimmeController) GetNPostsFromSub(c *gin.Context) {
 }
 
 // SubredditOrCount : Find if the route is /<subreddit>/ or /<count>/
-func (g GimmeController) SubredditOrCount(c *gin.Context) {
+func (g Controller) SubredditOrCount(c *gin.Context) {
 	route := c.Param("interface")
 
 	if _, err := strconv.Atoi(route); err == nil {

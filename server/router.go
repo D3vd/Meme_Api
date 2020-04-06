@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/R3l3ntl3ss/Meme_Api/controllers"
+	"github.com/R3l3ntl3ss/Meme_Api/controllers/gimme"
 	"github.com/R3l3ntl3ss/Meme_Api/libraries/reddit"
 	"github.com/gin-gonic/gin"
 )
@@ -17,17 +17,17 @@ func NewRouter() *gin.Engine {
 	r := &reddit.Reddit{}
 	r.Init()
 
-	gimme := router.Group("gimme")
+	gimmeRouter := router.Group("gimme")
 	{
-		g := controllers.GimmeController{
+		g := gimme.Controller{
 			R: r,
 		}
 
-		gimme.GET("/", g.GetOneRandomMeme)
+		gimmeRouter.GET("/", g.GetOneRandomMeme)
 
-		gimme.GET("/:interface/", g.SubredditOrCount)
+		gimmeRouter.GET("/:interface/", g.SubredditOrCount)
 
-		gimme.GET("/:interface/:count/", g.GetNPostsFromSub)
+		gimmeRouter.GET("/:interface/:count/", g.GetNPostsFromSub)
 	}
 
 	return router
