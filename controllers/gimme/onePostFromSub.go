@@ -1,6 +1,7 @@
 package gimme
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/utils"
@@ -29,6 +30,17 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 
 	// Remove Non Image posts from the Array
 	memes = utils.RemoveNonImagePosts(memes)
+
+	// Check if the Memes list has any posts
+	if len(memes) == 0 {
+		response := response.Error{
+			Code:    http.StatusBadRequest,
+			Message: fmt.Sprintf("r/%s has no Posts with Images", sub),
+		}
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
 
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]

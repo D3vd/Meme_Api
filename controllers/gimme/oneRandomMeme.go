@@ -33,6 +33,17 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 	// Remove Non Image posts from the Array
 	memes = utils.RemoveNonImagePosts(memes)
 
+	// Check if the Memes list has any posts
+	if len(memes) == 0 {
+		response := response.Error{
+			Code:    http.StatusInternalServerError,
+			Message: "Error while getting Memes",
+		}
+
+		c.JSON(http.StatusInternalServerError, response)
+		return
+	}
+
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]
 

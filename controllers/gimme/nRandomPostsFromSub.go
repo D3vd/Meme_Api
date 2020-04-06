@@ -1,6 +1,7 @@
 package gimme
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -45,6 +46,17 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 
 	// Remove Non Image posts from the Array
 	memes = utils.RemoveNonImagePosts(memes)
+
+	// Check if the Memes list has any posts
+	if len(memes) == 0 {
+		response := response.Error{
+			Code:    http.StatusBadRequest,
+			Message: fmt.Sprintf("r/%s has no Posts with Images", sub),
+		}
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
 
 	// Get N no. of posts from that list
 	memes = utils.GetNRandomMemes(memes, count)
