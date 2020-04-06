@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/utils"
 	"github.com/R3l3ntl3ss/Meme_Api/models/response"
@@ -13,7 +14,7 @@ import (
 // GetNPostsFromSub : Get N no. of posts from a specific subreddit
 func (g Controller) GetNPostsFromSub(c *gin.Context) {
 
-	sub := c.Param("interface")
+	sub := strings.ToLower(c.Param("interface"))
 	count, err := strconv.Atoi(c.Param("count"))
 
 	if err != nil {
@@ -31,21 +32,30 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 		count = 50
 	}
 
-	// Get 50 posts from that subreddit
-	memes := g.R.GetNPosts(sub, 50)
+	// Check if the sub is present in the cache
+	memes := g.Cache.GetPostsFromCache(sub)
 
+	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
-		response := response.Error{
-			Code:    http.StatusServiceUnavailable,
-			Message: "Error while getting memes from subreddit. Please try again",
+		// Get 50 posts from that subreddit
+		memes = g.R.GetNPosts(sub, 50)
+
+		if memes == nil {
+			response := response.Error{
+				Code:    http.StatusServiceUnavailable,
+				Message: "Error while getting memes from subreddit. Please try again",
+			}
+
+			c.JSON(http.StatusServiceUnavailable, response)
+			return
 		}
 
-		c.JSON(http.StatusServiceUnavailable, response)
-		return
-	}
+		// Remove Non Image posts from the Array
+		memes = utils.RemoveNonImagePosts(memes)
 
-	// Remove Non Image posts from the Array
-	memes = utils.RemoveNonImagePosts(memes)
+		// Write sub posts to Cache
+		g.Cache.WritePostsToCache(sub, memes)
+	}
 
 	// Check if the Memes list has any posts
 	if len(memes) == 0 {
