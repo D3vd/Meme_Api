@@ -16,28 +16,30 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 	// Choose Random Meme Subreddit
 	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
-	// TODO -- Check if the subreddit data is present in Cache
+	// Check if the sub is present in the cache
+	memes := g.Cache.GetPostsFromCache(sub)
 
-	// Get 50 posts from that Subreddit
-	memes := g.R.GetNPosts(sub, 50)
-
-	// Check if memes is nil because of error
+	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
-		response := response.Error{
-			Code:    http.StatusServiceUnavailable,
-			Message: "Error while getting memes from subreddit. Please try again",
+		// Get 50 posts from that Subreddit
+		memes = g.R.GetNPosts(sub, 50)
+
+		// Check if memes is nil because of error
+		if memes == nil {
+			response := response.Error{
+				Code:    http.StatusServiceUnavailable,
+				Message: "Error while getting memes from subreddit. Please try again",
+			}
+
+			c.JSON(http.StatusServiceUnavailable, response)
+			return
 		}
 
-		c.JSON(http.StatusServiceUnavailable, response)
-		return
+		// Remove Non Image posts from the Array
+		memes = utils.RemoveNonImagePosts(memes)
+
+		g.Cache.WritePostsToCache(sub, memes)
 	}
-
-	// Remove Non Image posts from the Array
-	memes = utils.RemoveNonImagePosts(memes)
-
-	// TODO -- Write subreddit posts to Cache
-
-	g.Cache.WritePostsToCache(sub, memes)
 
 	// Check if the Memes list has any posts
 	if len(memes) == 0 {
