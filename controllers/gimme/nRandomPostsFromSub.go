@@ -58,7 +58,9 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	}
 
 	// Check if the Memes list has any posts
-	if len(memes) == 0 {
+	memesLen := len(memes)
+
+	if memesLen == 0 {
 		response := response.Error{
 			Code:    http.StatusBadRequest,
 			Message: fmt.Sprintf("r/%s has no Posts with Images", sub),
@@ -66,6 +68,11 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 
 		c.JSON(http.StatusBadRequest, response)
 		return
+	}
+
+	// Check if the returned memes length is lesser count
+	if memesLen < count {
+		count = memesLen
 	}
 
 	// Get N no. of posts from that list

@@ -50,7 +50,9 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	}
 
 	// Check if the Memes list has any posts
-	if len(memes) == 0 {
+	memesLen := len(memes)
+
+	if memesLen == 0 {
 		response := response.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Error while getting Memes",
@@ -58,6 +60,11 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 
 		c.JSON(http.StatusInternalServerError, response)
 		return
+	}
+
+	// Check if the returned memes length is lesser count
+	if memesLen < count {
+		count = memesLen
 	}
 
 	// Get N no. of posts from that list
