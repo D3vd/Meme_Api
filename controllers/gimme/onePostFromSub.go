@@ -19,13 +19,16 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 	// Check if memes is nil because of error
 	if memes == nil {
 		response := response.Error{
-			Code:    500,
+			Code:    http.StatusServiceUnavailable,
 			Message: "Error while getting memes from subreddit. Please try again",
 		}
 
 		c.JSON(http.StatusServiceUnavailable, response)
 		return
 	}
+
+	// Remove Non Image posts from the Array
+	memes = utils.RemoveNonImagePosts(memes)
 
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]

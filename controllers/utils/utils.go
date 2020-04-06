@@ -15,6 +15,20 @@ func GetRandomN(n int) (num int) {
 	return
 }
 
+// RemoveNonImagePosts : Remove all posts from Memes List that doesn't end with '.jpg' or '.png'
+func RemoveNonImagePosts(memes []models.Meme) []models.Meme {
+	onlyImagePosts := []models.Meme{}
+
+	for _, meme := range memes {
+		url := meme.URL
+		if url[len(url)-4:] == ".jpg" || url[len(url)-4:] == ".png" {
+			onlyImagePosts = append(onlyImagePosts, meme)
+		}
+	}
+
+	return onlyImagePosts
+}
+
 // GetNRandomMemes : Get N no. of random memes from a list of Memes
 func GetNRandomMemes(memes []models.Meme, n int) []models.Meme {
 	rand.Seed(time.Now().UnixNano())

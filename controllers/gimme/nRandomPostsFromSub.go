@@ -16,8 +16,12 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	count, err := strconv.Atoi(c.Param("count"))
 
 	if err != nil {
-		// TODO: Handle Error properly
-		c.JSON(http.StatusBadRequest, "Give proper count value")
+		response := response.Error{
+			Code:    http.StatusBadRequest,
+			Message: "Invalid Count Value",
+		}
+
+		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
@@ -28,6 +32,19 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 
 	// Get 50 posts from that subreddit
 	memes := g.R.GetNPosts(sub, 50)
+
+	if memes == nil {
+		response := response.Error{
+			Code:    http.StatusServiceUnavailable,
+			Message: "Error while getting memes from subreddit. Please try again",
+		}
+
+		c.JSON(http.StatusServiceUnavailable, response)
+		return
+	}
+
+	// Remove Non Image posts from the Array
+	memes = utils.RemoveNonImagePosts(memes)
 
 	// Get N no. of posts from that list
 	memes = utils.GetNRandomMemes(memes, count)

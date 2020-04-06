@@ -26,6 +26,20 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	// Get 50 posts from that subreddit
 	memes := g.R.GetNPosts(sub, 50)
 
+	// Check if memes is nil because of error
+	if memes == nil {
+		response := response.Error{
+			Code:    http.StatusServiceUnavailable,
+			Message: "Error while getting memes from subreddit. Please try again",
+		}
+
+		c.JSON(http.StatusServiceUnavailable, response)
+		return
+	}
+
+	// Remove Non Image posts from the Array
+	memes = utils.RemoveNonImagePosts(memes)
+
 	// Get N no. of posts from that list
 	memes = utils.GetNRandomMemes(memes, count)
 

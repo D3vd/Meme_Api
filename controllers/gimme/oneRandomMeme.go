@@ -30,6 +30,9 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 		return
 	}
 
+	// Remove Non Image posts from the Array
+	memes = utils.RemoveNonImagePosts(memes)
+
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]
 
