@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/gimme"
 	"github.com/R3l3ntl3ss/Meme_Api/libraries/reddit"
+	"github.com/R3l3ntl3ss/Meme_Api/libraries/redis"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,10 +18,15 @@ func NewRouter() *gin.Engine {
 	r := &reddit.Reddit{}
 	r.Init()
 
+	// Create a Redis Object and Initialize it
+	cache := &redis.Redis{}
+	cache.Init()
+
 	gimmeRouter := router.Group("gimme")
 	{
 		g := gimme.Controller{
-			R: r,
+			R:     r,
+			Cache: cache,
 		}
 
 		gimmeRouter.GET("/", g.GetOneRandomMeme)

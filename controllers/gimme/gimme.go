@@ -6,11 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/R3l3ntl3ss/Meme_Api/libraries/reddit"
+	"github.com/R3l3ntl3ss/Meme_Api/libraries/redis"
 )
 
 // Controller : Gives random meme(s) through /gimme endpoint
 type Controller struct {
-	R *reddit.Reddit
+	R     *reddit.Reddit
+	Cache *redis.Redis
 }
 
 // SubredditOrCount : Find if the route is /<subreddit>/ or /<count>/
