@@ -30,5 +30,9 @@ func (r *Redis) Init() {
 
 	redisClient := redis.NewClient(options)
 
+	if redisClient.Ping().String() != "ping: PONG" {
+		log.Fatalln("Error while contacting Redis DB. Please check the Redis Cloud URL.")
+	}
+
 	r.Client = *redisClient
 }
