@@ -4,6 +4,7 @@ import (
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/gimme"
 	"github.com/R3l3ntl3ss/Meme_Api/libraries/reddit"
 	"github.com/R3l3ntl3ss/Meme_Api/libraries/redis"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +14,7 @@ func NewRouter() *gin.Engine {
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.Use(cors.Default())
 
 	// Create a Reddit Object and Initialize it
 	r := &reddit.Reddit{}
