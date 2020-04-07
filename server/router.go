@@ -31,11 +31,11 @@ func NewRouter() *gin.Engine {
 			Cache: cache,
 		}
 
-		gimmeRouter.GET("/", g.GetOneRandomMeme)
+		gimmeRouter.GET("", g.GetOneRandomMeme)
 
-		gimmeRouter.GET("/:interface/", g.SubredditOrCount)
+		gimmeRouter.GET("/:interface", g.SubredditOrCount)
 
-		gimmeRouter.GET("/:interface/:count/", g.GetNPostsFromSub)
+		gimmeRouter.GET("/:interface/:count", g.GetNPostsFromSub)
 	}
 
 	return router
