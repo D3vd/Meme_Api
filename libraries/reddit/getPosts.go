@@ -2,7 +2,9 @@ package reddit
 
 import (
 	"encoding/json"
+	"github.com/R3l3ntl3ss/Meme_Api/models/response"
 	"log"
+	"net/http"
 
 	"github.com/R3l3ntl3ss/Meme_Api/models"
 
@@ -10,7 +12,7 @@ import (
 )
 
 // GetNPosts : Get (N) no. of posts from Reddit with Subreddit Name and Limit
-func (r *Reddit) GetNPosts(subreddit string, count int) []models.Meme {
+func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 
 	url := GetSubredditAPIURL(subreddit, count)
 
@@ -25,11 +27,34 @@ func (r *Reddit) GetNPosts(subreddit string, count int) []models.Meme {
 		body, _ = r.MakeGetRequest(url)
 	}
 
+	// Handle Subreddit Errors for Forbidden and Not Found
+	if statusCode == 403 {
+		res := response.Error{
+			Code: http.StatusForbidden,
+			Message: "Unable to Access Subreddit. Subreddit is Locked or Private",
+		}
+		return nil, res
+	}
+
+	if statusCode == 404 {
+		res := response.Error{
+			Code:    http.StatusNotFound,
+			Message: "This subreddit does not exist.",
+		}
+		return nil, res
+	}
+
 	var redditResponse reddit.Response
 
 	if err := json.Unmarshal(body, &redditResponse); err != nil {
 		log.Println("Error while Parsing Reddit Response")
-		return nil
+
+		res := response.Error{
+			Code: http.StatusInternalServerError,
+			Message: "Error while getting memes from subreddit. Please try again",
+		}
+
+		return nil, res
 	}
 
 	var memes []models.Meme
@@ -45,5 +70,5 @@ func (r *Reddit) GetNPosts(subreddit string, count int) []models.Meme {
 		memes = append(memes, meme)
 	}
 
-	return memes
+	return memes, response.Error{}
 }

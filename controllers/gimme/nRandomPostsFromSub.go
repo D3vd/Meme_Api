@@ -38,15 +38,10 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that subreddit
-		memes = g.R.GetNPosts(sub, 50)
+		memes, res := g.R.GetNPosts(sub, 50)
 
 		if memes == nil {
-			response := response.Error{
-				Code:    http.StatusServiceUnavailable,
-				Message: "Error while getting memes from subreddit. Please try again",
-			}
-
-			c.JSON(http.StatusServiceUnavailable, response)
+			c.JSON(res.Code, res)
 			return
 		}
 
