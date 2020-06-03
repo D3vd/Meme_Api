@@ -18,12 +18,12 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	count, err := strconv.Atoi(c.Param("count"))
 
 	if err != nil {
-		response := response.Error{
+		res := response.Error{
 			Code:    http.StatusBadRequest,
 			Message: "Invalid Count Value",
 		}
 
-		c.JSON(http.StatusBadRequest, response)
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -59,12 +59,12 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	memesLen := len(memes)
 
 	if memesLen == 0 {
-		response := response.Error{
+		res := response.Error{
 			Code:    http.StatusBadRequest,
 			Message: fmt.Sprintf("r/%s has no Posts with Images", sub),
 		}
 
-		c.JSON(http.StatusBadRequest, response)
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -89,11 +89,11 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 		memesResponse = append(memesResponse, memeResponse)
 	}
 
-	response := response.MultipleMemes{
+	res := response.MultipleMemes{
 		Count: len(memesResponse),
 		Memes: memesResponse,
 	}
 
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusOK, res)
 	return
 }

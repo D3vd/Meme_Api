@@ -43,25 +43,25 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 
 	// Check if the Memes list has any posts
 	if len(memes) == 0 {
-		response := response.Error{
+		res := response.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Error while getting Memes",
 		}
 
-		c.JSON(http.StatusInternalServerError, response)
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
 
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]
 
-	response := response.OneMeme{
+	res := response.OneMeme{
 		PostLink:  meme.PostLink,
 		Subreddit: meme.SubReddit,
 		Title:     meme.Title,
 		URL:       meme.URL,
 	}
 
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusOK, res)
 	return
 }

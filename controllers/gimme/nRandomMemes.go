@@ -51,12 +51,12 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	memesLen := len(memes)
 
 	if memesLen == 0 {
-		response := response.Error{
+		res := response.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Error while getting Memes",
 		}
 
-		c.JSON(http.StatusInternalServerError, response)
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
 
@@ -81,11 +81,11 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 		memesResponse = append(memesResponse, memeResponse)
 	}
 
-	response := response.MultipleMemes{
+	res := response.MultipleMemes{
 		Count: len(memesResponse),
 		Memes: memesResponse,
 	}
 
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusOK, res)
 	return
 }
