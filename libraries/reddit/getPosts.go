@@ -30,9 +30,10 @@ func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response
 	// Handle Subreddit Errors for Forbidden and Not Found
 	if statusCode == 403 {
 		res := response.Error{
-			Code: http.StatusForbidden,
+			Code:    http.StatusForbidden,
 			Message: "Unable to Access Subreddit. Subreddit is Locked or Private",
 		}
+
 		return nil, res
 	}
 
@@ -41,6 +42,7 @@ func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response
 			Code:    http.StatusNotFound,
 			Message: "This subreddit does not exist.",
 		}
+
 		return nil, res
 	}
 
@@ -50,8 +52,18 @@ func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response
 		log.Println("Error while Parsing Reddit Response")
 
 		res := response.Error{
-			Code: http.StatusInternalServerError,
+			Code:    http.StatusInternalServerError,
 			Message: "Error while getting memes from subreddit. Please try again",
+		}
+
+		return nil, res
+	}
+
+	// Check if there are posts in the subreddit
+	if len(redditResponse.Data.Children) == 0 {
+		res := response.Error{
+			Code:    http.StatusNotFound,
+			Message: "This subreddit has no posts or doesn't exist.",
 		}
 
 		return nil, res
