@@ -38,18 +38,21 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that subreddit
-		memes, res := g.R.GetNPosts(sub, 50)
+		freshMemes, res := g.R.GetNPosts(sub, 50)
 
-		if memes == nil {
+		if freshMemes == nil {
 			c.JSON(res.Code, res)
 			return
 		}
 
 		// Remove Non Image posts from the Array
-		memes = utils.RemoveNonImagePosts(memes)
+		freshMemes = utils.RemoveNonImagePosts(freshMemes)
 
 		// Write sub posts to Cache
-		g.Cache.WritePostsToCache(sub, memes)
+		g.Cache.WritePostsToCache(sub, freshMemes)
+
+		// Set Memes to Fresh Memes
+		memes = freshMemes
 	}
 
 	// Check if the Memes list has any posts
