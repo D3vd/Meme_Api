@@ -30,7 +30,7 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 		}
 
 		// Remove Non Image posts from the Array
-		memes = utils.RemoveNonImagePosts(freshMemes)
+		freshMemes = utils.RemoveNonImagePosts(freshMemes)
 
 		// Write sub posts to Cache
 		g.Cache.WritePostsToCache(sub, freshMemes)
