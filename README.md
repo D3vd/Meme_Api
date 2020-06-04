@@ -13,7 +13,9 @@ API Link : [https://meme-api.herokuapp.com/gimme](https://meme-api.herokuapp.com
   "postLink": "https://redd.it/9vqgv2",
   "subreddit": "memes",
   "title": "Good mor-ning Reddit!...",
-  "url": "https://i.redd.it/yykt3r9zsex11.png"
+  "url": "https://i.redd.it/yykt3r9zsex11.png",
+  "nsfw": false,
+  "spoiler": false
 }
 ```
 
@@ -35,15 +37,19 @@ Response:
   "memes": [
     {
       "postLink": "https://redd.it/d5bn24",
-      "subreddit": "meirl",
-      "title": "meirl",
-      "url": "https://i.redd.it/6wjb8gibu2n31.jpg"
+      "subreddit": "me_irl",
+      "title": "me_irl",
+      "url": "https://i.redd.it/6wjb8gibu2n31.jpg",
+      "nsfw": false,
+      "spoiler": false
     },
     {
       "postLink": "https://redd.it/d4zipy",
-      "subreddit": "meirl",
-      "title": "Me🚐irl",
-      "url": "https://i.redd.it/hyl6fgweswm31.jpg"
+      "subreddit": "me_irl",
+      "title": "Me🚐_irl",
+      "url": "https://i.redd.it/hyl6fgweswm31.jpg",
+      "nsfw": false,
+      "spoiler": false
     }
   ]
 }
@@ -51,7 +57,7 @@ Response:
 
 ### Specify Subreddit
 
-By default the API grabs a random meme from '_memes_', '_dankmemes_', '_meirl_' subreddits. To provide your own custom subreddit use the following endpoint.
+By default the API grabs a random meme from '_memes_', '_dankmemes_', '_me_irl_' subreddits. To provide your own custom subreddit use the following endpoint.
 
 Endpoint: [/gimme/{subreddit}](https://meme-api.herokuapp.com/gimme/dankmemes)
 
@@ -74,12 +80,16 @@ Response:
     {
       "postLink": "https://redd.it/d5e119",
       "title": "Mph and km/h so everyone can understand",
-      "url": "https://i.redd.it/imb4r0se74n31.jpg"
+      "url": "https://i.redd.it/imb4r0se74n31.jpg",
+      "nsfw": false,
+      "spoiler": false
     },
     {
       "postLink": "https://redd.it/d5e5ns",
       "title": "Funnier as a team.",
-      "url": "https://i.redd.it/ixb7absfa4n31.jpg"
+      "url": "https://i.redd.it/ixb7absfa4n31.jpg",
+      "nsfw": false,
+      "spoiler": false
     }
   ],
   "subreddit": "dankmemes"
