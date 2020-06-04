@@ -6,4 +6,6 @@ type Meme struct {
 	SubReddit string `json:"subreddit"`
 	Title     string `json:"title"`
 	URL       string `json:"url"`
+	NSFW      bool `json:"nsfw"`
+	Spoiler   bool `json:"spoiler"`
 }

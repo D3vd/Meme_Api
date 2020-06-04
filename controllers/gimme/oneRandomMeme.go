@@ -60,6 +60,8 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 		Subreddit: meme.SubReddit,
 		Title:     meme.Title,
 		URL:       meme.URL,
+		NSFW:      meme.NSFW,
+		Spoiler:   meme.Spoiler,
 	}
 
 	c.JSON(http.StatusOK, res)

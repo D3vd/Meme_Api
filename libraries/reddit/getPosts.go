@@ -77,6 +77,8 @@ func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response
 			PostLink:  post.Data.GetShortLink(),
 			SubReddit: post.Data.Subreddit,
 			URL:       post.Data.URL,
+			NSFW:      post.Data.Over18,
+			Spoiler:   post.Data.Spoiler,
 		}
 
 		memes = append(memes, meme)

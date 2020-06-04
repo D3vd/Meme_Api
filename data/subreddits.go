@@ -4,4 +4,5 @@ package data
 var MemeSubreddits = []string{
 	"memes",
 	"me_irl",
+	"dankmemes",
 }
