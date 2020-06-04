@@ -2,6 +2,7 @@ package gimme
 
 import (
 	"fmt"
+	"github.com/R3l3ntl3ss/Meme_Api/data"
 	"net/http"
 	"strconv"
 	"strings"
@@ -38,7 +39,7 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that subreddit
-		freshMemes, res := g.R.GetNPosts(sub, 50)
+		freshMemes, res := g.R.GetNPosts(sub, data.RedditPostsLimit)
 
 		if freshMemes == nil {
 			c.JSON(res.Code, res)

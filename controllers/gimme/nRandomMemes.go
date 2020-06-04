@@ -29,7 +29,7 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that subreddit
-		freshMemes, res := g.R.GetNPosts(sub, 50)
+		freshMemes, res := g.R.GetNPosts(sub, data.RedditPostsLimit)
 
 		// Check if memes is nil because of error
 		if freshMemes == nil {

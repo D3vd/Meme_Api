@@ -2,8 +2,7 @@ package redis
 
 import (
 	"encoding/json"
-	"time"
-
+	"github.com/R3l3ntl3ss/Meme_Api/data"
 	"github.com/R3l3ntl3ss/Meme_Api/models"
 )
 
@@ -15,7 +14,7 @@ func (r Redis) WritePostsToCache(sub string, memes []models.Meme) (ok bool) {
 		return false
 	}
 
-	err = r.Client.Set(sub, memesBinary, 2*time.Hour).Err()
+	err = r.Client.Set(sub, memesBinary, data.CacheExpirationTime).Err()
 
 	if err != nil {
 		return false
