@@ -17,11 +17,11 @@ func GetRandomN(n int) (num int) {
 
 // RemoveNonImagePosts : Remove all posts from Memes List that doesn't end with '.jpg' or '.png'
 func RemoveNonImagePosts(memes []models.Meme) []models.Meme {
-	onlyImagePosts := []models.Meme{}
+	var onlyImagePosts []models.Meme
 
 	for _, meme := range memes {
 		url := meme.URL
-		if url[len(url)-4:] == ".jpg" || url[len(url)-4:] == ".png" {
+		if url[len(url)-4:] == ".jpg" || url[len(url)-4:] == ".png" || url[len(url)-4:] == ".gif" {
 			onlyImagePosts = append(onlyImagePosts, meme)
 		}
 	}
