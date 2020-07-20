@@ -13,7 +13,7 @@ COPY . .
 RUN go build -o /app/Meme_API
 
 # Final Stage
-FROM alpine
+FROM alpine:latest
 WORKDIR /app
 COPY --from=build /app/Meme_API /app/
 
