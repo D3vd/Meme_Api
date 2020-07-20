@@ -1,12 +1,23 @@
-FROM golang:1.13.5
+# Build Stage
+FROM golang:alpine as build
 
-WORKDIR /go/src/github.com/R3l3ntl3ss/Meme_Api
+WORKDIR $GOPATH/src/github.com/R3l3ntl3ss/Meme_Api
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
 
 COPY . .
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+RUN go build -o /app/Meme_API
+
+# Final Stage
+FROM alpine
+WORKDIR /app
+COPY --from=build /app/Meme_API /app/
 
 EXPOSE 8080
 
-CMD [ "go", "run", "." ]
+CMD ./Meme_API
+
