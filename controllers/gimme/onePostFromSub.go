@@ -61,6 +61,8 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 		URL:       meme.URL,
 		NSFW:      meme.NSFW,
 		Spoiler:   meme.Spoiler,
+		Author:    meme.Author,
+		Likes:     meme.Likes,
 	}
 
 	c.JSON(http.StatusOK, res)

@@ -87,6 +87,8 @@ func (g Controller) GetNPostsFromSub(c *gin.Context) {
 			URL:       meme.URL,
 			NSFW:      meme.NSFW,
 			Spoiler:   meme.Spoiler,
+                        Author:    meme.Author,
+                        Likes:     meme.Likes,
 		}
 
 		memesResponse = append(memesResponse, memeResponse)
