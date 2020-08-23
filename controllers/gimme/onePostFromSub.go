@@ -2,9 +2,10 @@ package gimme
 
 import (
 	"fmt"
-	"github.com/R3l3ntl3ss/Meme_Api/data"
 	"net/http"
 	"strings"
+
+	"github.com/R3l3ntl3ss/Meme_Api/data"
 
 	"github.com/R3l3ntl3ss/Meme_Api/controllers/utils"
 	"github.com/R3l3ntl3ss/Meme_Api/models/response"
@@ -61,6 +62,8 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 		URL:       meme.URL,
 		NSFW:      meme.NSFW,
 		Spoiler:   meme.Spoiler,
+		Author:    meme.Author,
+		Ups:       meme.Ups,
 	}
 
 	c.JSON(http.StatusOK, res)

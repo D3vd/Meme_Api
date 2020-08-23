@@ -8,4 +8,6 @@ type OneMeme struct {
 	URL       string `json:"url"`
 	NSFW      bool   `json:"nsfw"`
 	Spoiler   bool   `json:"spoiler"`
+	Author    string `json:"author"`
+	Ups       int    `json:"ups"`
 }
