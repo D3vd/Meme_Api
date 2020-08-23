@@ -7,7 +7,7 @@ type Meme struct {
 	Title     string `json:"title"`
 	URL       string `json:"url"`
 	Author    string `json:"author"`
-	Likes     int `json:"ups"`
-	NSFW      bool `json:"nsfw"`
-	Spoiler   bool `json:"spoiler"`
+	Ups       int    `json:"ups"`
+	NSFW      bool   `json:"nsfw"`
+	Spoiler   bool   `json:"spoiler"`
 }

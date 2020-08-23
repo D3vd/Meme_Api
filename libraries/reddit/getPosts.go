@@ -2,9 +2,10 @@ package reddit
 
 import (
 	"encoding/json"
-	"github.com/R3l3ntl3ss/Meme_Api/models/response"
 	"log"
 	"net/http"
+
+	"github.com/R3l3ntl3ss/Meme_Api/models/response"
 
 	"github.com/R3l3ntl3ss/Meme_Api/models"
 
@@ -78,7 +79,7 @@ func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response
 			SubReddit: post.Data.Subreddit,
 			URL:       post.Data.URL,
 			Author:    post.Data.Author,
-			Likes:     post.Data.Ups,
+			Ups:       post.Data.Ups,
 			NSFW:      post.Data.Over18,
 			Spoiler:   post.Data.Spoiler,
 		}

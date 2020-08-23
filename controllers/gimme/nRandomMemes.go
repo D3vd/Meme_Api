@@ -79,7 +79,7 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 			NSFW:      meme.NSFW,
 			Spoiler:   meme.Spoiler,
 			Author:    meme.Author,
-			Likes:     meme.Likes,
+			Ups:       meme.Ups,
 		}
 
 		memesResponse = append(memesResponse, memeResponse)
