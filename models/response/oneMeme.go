@@ -6,8 +6,8 @@ type OneMeme struct {
 	Subreddit string `json:"subreddit"`
 	Title     string `json:"title"`
 	URL       string `json:"url"`
-	Author    string `json:"author"`
 	NSFW      bool   `json:"nsfw"`
-	Ups       int    `json:"ups"`
 	Spoiler   bool   `json:"spoiler"`
+	Author    string `json:"author"`
+	Ups       int    `json:"ups"`
 }
