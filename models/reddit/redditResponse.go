@@ -36,6 +36,7 @@ type Data struct {
 	Preview           interface{} `json:"preview"`
 	Spoiler           bool        `json:"spoiler"`
 	Locked            bool        `json:"locked"`
+	Body              string      `json:"body"`
 	ID                string      `json:"id"`
 	Author            string      `json:"author"`
 	URL               string      `json:"url"`
@@ -43,6 +44,10 @@ type Data struct {
 	Media             interface{} `json:"media"`
 	IsVideo           bool        `json:"is_video"`
 }
+
+// Response : Main container for the Reddit Response with commnets
+type Comments []Response
+
 
 // GetShortLink : Get the short URL for the post
 func (d Data) GetShortLink() (url string) {

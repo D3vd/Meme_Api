@@ -10,4 +10,11 @@ type Meme struct {
 	Ups       int    `json:"ups"`
 	NSFW      bool   `json:"nsfw"`
 	Spoiler   bool   `json:"spoiler"`
+	Comments  []Comment `json:"comments"`
+}
+
+type Comment struct {
+	Author            string      `json:"author"`
+	Body              string      `json:"body"`
+	Ups               int         `json:"ups"`
 }

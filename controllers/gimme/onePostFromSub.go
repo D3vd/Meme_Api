@@ -54,18 +54,6 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 
 	// Choose one post from the list
 	meme := memes[utils.GetRandomN(len(memes))]
-
-	res := response.OneMeme{
-		PostLink:  meme.PostLink,
-		Subreddit: meme.SubReddit,
-		Title:     meme.Title,
-		URL:       meme.URL,
-		NSFW:      meme.NSFW,
-		Spoiler:   meme.Spoiler,
-		Author:    meme.Author,
-		Ups:       meme.Ups,
-	}
-
-	c.JSON(http.StatusOK, res)
+	c.JSON(http.StatusOK, meme)
 	return
 }

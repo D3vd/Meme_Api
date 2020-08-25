@@ -68,26 +68,10 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	// Get N no. of posts from that list
 	memes = utils.GetNRandomMemes(memes, count)
 
-	var memesResponse []response.OneMeme
-
-	for _, meme := range memes {
-		memeResponse := response.OneMeme{
-			PostLink:  meme.PostLink,
-			Subreddit: meme.SubReddit,
-			Title:     meme.Title,
-			URL:       meme.URL,
-			NSFW:      meme.NSFW,
-			Spoiler:   meme.Spoiler,
-			Author:    meme.Author,
-			Ups:       meme.Ups,
-		}
-
-		memesResponse = append(memesResponse, memeResponse)
-	}
 
 	res := response.MultipleMemes{
-		Count: len(memesResponse),
-		Memes: memesResponse,
+		Count: len(memes),
+		Memes: memes,
 	}
 
 	c.JSON(http.StatusOK, res)
