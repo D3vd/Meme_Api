@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/R3l3ntl3ss/Meme_Api/models"
+	"Meme_Api/models"
 )
 
 // GetRandomN : Get a Random Number to a particular range n

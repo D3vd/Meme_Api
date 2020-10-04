@@ -1,7 +1,7 @@
 # Build Stage
 FROM golang:alpine as build
 
-WORKDIR $GOPATH/src/github.com/R3l3ntl3ss/Meme_Api
+WORKDIR /src/Meme_Api
 
 COPY go.mod .
 COPY go.sum .

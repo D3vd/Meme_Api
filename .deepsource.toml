@@ -5,4 +5,4 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_path = "github.com/R3l3ntl3ss/Meme_Api"
+  import_path = "Meme_Api"

@@ -1,9 +1,9 @@
 package redis
 
 import (
+	"Meme_Api/data"
+	"Meme_Api/models"
 	"encoding/json"
-	"github.com/R3l3ntl3ss/Meme_Api/data"
-	"github.com/R3l3ntl3ss/Meme_Api/models"
 )
 
 // WritePostsToCache : Takes a List of Memes and writes it to Cache

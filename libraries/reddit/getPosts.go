@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/R3l3ntl3ss/Meme_Api/models/response"
+	"Meme_Api/models/response"
 
-	"github.com/R3l3ntl3ss/Meme_Api/models"
+	"Meme_Api/models"
 
-	"github.com/R3l3ntl3ss/Meme_Api/models/reddit"
+	"Meme_Api/models/reddit"
 )
 
 // GetNPosts : Get (N) no. of posts from Reddit with Subreddit Name and Limit

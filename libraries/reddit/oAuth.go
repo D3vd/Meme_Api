@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	models "github.com/R3l3ntl3ss/Meme_Api/models/reddit"
+	models "Meme_Api/models/reddit"
 )
 
 // GetAccessToken : Get temporary Access Token based on App client ID and Secret
