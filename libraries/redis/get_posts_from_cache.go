@@ -7,12 +7,12 @@ import (
 )
 
 // GetPostsFromCache : Get memes from Cache based on sub
-func GetPostsFromCache(sub string) ([]models.Meme, error) {
+func GetPostsFromCache(sub string) []models.Meme {
 
 	memesBinary, err := Client.Get(sub).Bytes()
 
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
 	var memes []models.Meme
@@ -20,8 +20,8 @@ func GetPostsFromCache(sub string) ([]models.Meme, error) {
 	err = json.Unmarshal(memesBinary, &memes)
 
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
-	return memes, nil
+	return memes
 }

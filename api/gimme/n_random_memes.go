@@ -28,10 +28,7 @@ func GetNRandomMemes(c *gin.Context) {
 	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
 	// Check if the sub is present in the cache
-	memes, err := redis.GetPostsFromCache(sub)
-	if err != nil {
-		sentry.CaptureException(err)
-	}
+	memes := redis.GetPostsFromCache(sub)
 
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
