@@ -1,7 +1,7 @@
 # Meme API
 
-[![CodeFactor](https://www.codefactor.io/repository/github/r3l3ntl3ss/meme_api/badge)](https://www.codefactor.io/repository/github/r3l3ntl3ss/meme_api)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/97620b169e9c49cba3df99699afbad26)](https://app.codacy.com/manual/dev.91096/Meme_Api?utm_source=github.com&utm_medium=referral&utm_content=R3l3ntl3ss/Meme_Api&utm_campaign=Badge_Grade_Dashboard)
+[![CodeFactor](https://www.codefactor.io/repository/github/d3vd/meme_api/badge)](https://www.codefactor.io/repository/github/d3vd/meme_api)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8df2a02ea3294423adc74bbf0a13356e)](https://www.codacy.com/gh/D3vd/Meme_Api/dashboard?utm_source=github.com&utm_medium=referral&utm_content=D3vd/Meme_Api&utm_campaign=Badge_Grade)
 
 JSON API for a random meme scraped from reddit.
 
