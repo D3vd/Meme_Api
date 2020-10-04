@@ -12,6 +12,7 @@ import (
 	"Meme_Api/models/response"
 	"Meme_Api/utils"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +22,10 @@ func GetOnePostFromSub(c *gin.Context) {
 	sub := strings.ToLower(c.Param("interface"))
 
 	// Check if the sub is present in the cache
-	memes := redis.GetPostsFromCache(sub)
+	memes, err := redis.GetPostsFromCache(sub)
+	if err != nil {
+		sentry.CaptureException(err)
+	}
 
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
@@ -38,7 +42,9 @@ func GetOnePostFromSub(c *gin.Context) {
 		freshMemes = utils.RemoveNonImagePosts(freshMemes)
 
 		// Write sub posts to Cache
-		redis.WritePostsToCache(sub, freshMemes)
+		if err := redis.WritePostsToCache(sub, freshMemes); err != nil {
+			sentry.CaptureException(err)
+		}
 
 		// Set Memes to Fresh Memes
 		memes = freshMemes

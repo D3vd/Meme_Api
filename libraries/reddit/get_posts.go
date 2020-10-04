@@ -7,11 +7,12 @@ import (
 
 	rm "Meme_Api/libraries/reddit/models"
 	"Meme_Api/models"
-	"Meme_Api/models/response"
+
+	"github.com/getsentry/sentry-go"
 )
 
 // GetNPosts : Get (N) no. of posts from Reddit with Subreddit Name and Limit
-func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
+func GetNPosts(subreddit string, count int) ([]models.Meme, rm.CustomRedditError) {
 
 	url := GetSubredditAPIURL(subreddit, count)
 
@@ -23,12 +24,12 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 		GetNewAccessToken()
 
 		// Make request Again
-		body, _ = MakeGetRequest(url)
+		body, statusCode = MakeGetRequest(url)
 	}
 
 	// Handle Subreddit Errors for Forbidden and Not Found
 	if statusCode == 403 {
-		res := response.Error{
+		res := rm.CustomRedditError{
 			Code:    http.StatusForbidden,
 			Message: "Unable to Access Subreddit. Subreddit is Locked or Private",
 		}
@@ -37,7 +38,7 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 	}
 
 	if statusCode == 404 {
-		res := response.Error{
+		res := rm.CustomRedditError{
 			Code:    http.StatusNotFound,
 			Message: "This subreddit does not exist.",
 		}
@@ -48,9 +49,10 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 	var redditResponse rm.Response
 
 	if err := json.Unmarshal(body, &redditResponse); err != nil {
+		sentry.CaptureException(err)
 		log.Println("Error while Parsing Reddit Response")
 
-		res := response.Error{
+		res := rm.CustomRedditError{
 			Code:    http.StatusInternalServerError,
 			Message: "Error while getting memes from subreddit. Please try again",
 		}
@@ -60,7 +62,7 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 
 	// Check if there are posts in the subreddit
 	if len(redditResponse.Data.Children) == 0 {
-		res := response.Error{
+		res := rm.CustomRedditError{
 			Code:    http.StatusNotFound,
 			Message: "This subreddit has no posts or doesn't exist.",
 		}
@@ -85,5 +87,5 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 		memes = append(memes, meme)
 	}
 
-	return memes, response.Error{}
+	return memes, rm.CustomRedditError{}
 }

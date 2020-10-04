@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	rm "Meme_Api/libraries/reddit/models"
+
+	"github.com/getsentry/sentry-go"
 )
 
 // GetAccessToken : Get temporary Access Token based on App client ID and Secret
@@ -21,7 +23,13 @@ func GetAccessToken() (accessToken string) {
 	// Set grant type to client_credentials as POST body
 	payload := strings.NewReader("grant_type=client_credentials")
 
-	req, _ := http.NewRequest("POST", url, payload)
+	req, err := http.NewRequest("POST", url, payload)
+
+	if err != nil {
+		sentry.CaptureException(err)
+		log.Println("Error while Creating Request")
+		return ""
+	}
 
 	// Set Headers including the User Agent and the Authorization with the encoded credentials
 	req.Header.Add("User-Agent", UserAgent)
@@ -39,6 +47,7 @@ func GetAccessToken() (accessToken string) {
 	res, err := http.DefaultClient.Do(req)
 
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Println("Error while making connecting to : " + url)
 		return ""
 	}
@@ -52,6 +61,7 @@ func GetAccessToken() (accessToken string) {
 	var accessTokenBody rm.AccessTokenBody
 
 	if err := json.Unmarshal(body, &accessTokenBody); err != nil {
+		sentry.CaptureException(err)
 		log.Println("Error while Unmarshalling AccessTokenBody", err)
 		return ""
 	}

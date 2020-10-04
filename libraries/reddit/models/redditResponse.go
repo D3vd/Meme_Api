@@ -1,4 +1,4 @@
-package reddit
+package models
 
 // Response : Main container for the Reddit Response
 type Response struct {
