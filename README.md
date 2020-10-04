@@ -1,5 +1,6 @@
 # Meme API
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/990c1b4d07e74fe48ac6cefb9238f601)](https://app.codacy.com/gh/D3vd/Meme_Api?utm_source=github.com&utm_medium=referral&utm_content=D3vd/Meme_Api&utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/r3l3ntl3ss/meme_api/badge)](https://www.codefactor.io/repository/github/r3l3ntl3ss/meme_api)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/97620b169e9c49cba3df99699afbad26)](https://app.codacy.com/manual/dev.91096/Meme_Api?utm_source=github.com&utm_medium=referral&utm_content=R3l3ntl3ss/Meme_Api&utm_campaign=Badge_Grade_Dashboard)
 
