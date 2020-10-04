@@ -9,18 +9,18 @@ import (
 )
 
 // EncodeCredentials : Return base64 Encoded client ID and Secret required for authentication
-func (r *Reddit) EncodeCredentials() (encodedCredentials string) {
-	data := r.ClientID + ":" + r.ClientSecret
+func EncodeCredentials() (encodedCredentials string) {
+	data := ClientID + ":" + ClientSecret
 	encodedCredentials = base64.StdEncoding.EncodeToString([]byte(data))
 	return
 }
 
 // MakeGetRequest : Makes a GET Request to Reddit API with Access Token
-func (r *Reddit) MakeGetRequest(url string) (responseBody []byte, errorCode int) {
+func MakeGetRequest(url string) (responseBody []byte, errorCode int) {
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("Authorization", "Bearer "+r.AccessToken)
-	req.Header.Add("User-Agent", r.UserAgent)
+	req.Header.Add("Authorization", "Bearer "+AccessToken)
+	req.Header.Add("User-Agent", UserAgent)
 	req.Header.Add("Accept", "*/*")
 	req.Header.Add("Cache-Control", "no-cache")
 	req.Header.Add("Host", "oauth.reddit.com")

@@ -6,15 +6,15 @@ import (
 )
 
 // Reddit : Reddit structure with reddit credentials
-type Reddit struct {
-	AccessToken  string `json:"access_token"`
-	ClientID     string `json:"client_id"`
-	ClientSecret string `json:"client_secret"`
-	UserAgent    string `json:"user_agent"`
-}
+var (
+	AccessToken  string
+	ClientID     string
+	ClientSecret string
+	UserAgent    string
+)
 
 // Init : Initialize the Reddit Structure with App Credentials
-func (r *Reddit) Init() {
+func Init() {
 	// Get Reddit Client Credentials from the environment variables
 	clientID := os.Getenv("REDDIT_CLIENT_ID")
 	clientSecret := os.Getenv("REDDIT_CLIENT_SECRET")
@@ -24,30 +24,30 @@ func (r *Reddit) Init() {
 		return
 	}
 
-	r.ClientID = clientID
-	r.ClientSecret = clientSecret
+	ClientID = clientID
+	ClientSecret = clientSecret
 
-	r.UserAgent = "MEME_API"
+	UserAgent = "MEME_API"
 
-	accessToken := r.GetAccessToken()
+	accessToken := GetAccessToken()
 
 	if accessToken == "" {
 		log.Fatalln("Error while getting Access Token")
 		return
 	}
 
-	r.AccessToken = accessToken
+	AccessToken = accessToken
 }
 
 // GetNewAccessToken : Function to Generate New Access Token once the old one expires
-func (r *Reddit) GetNewAccessToken() (ok bool) {
-	newAccessToken := r.GetAccessToken()
+func GetNewAccessToken() (ok bool) {
+	newAccessToken := GetAccessToken()
 
 	if newAccessToken == "" {
 		log.Println("Unable to get new Access Token")
 		return false
 	}
 
-	r.AccessToken = newAccessToken
+	AccessToken = newAccessToken
 	return true
 }

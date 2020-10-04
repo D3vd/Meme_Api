@@ -6,25 +6,27 @@ import (
 	"strings"
 
 	"Meme_Api/data"
+	"Meme_Api/libraries/reddit"
+	"Meme_Api/libraries/redis"
 
-	"Meme_Api/controllers/utils"
 	"Meme_Api/models/response"
+	"Meme_Api/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 // GetOnePostFromSub : Get one post from a specific subreddit
-func (g Controller) GetOnePostFromSub(c *gin.Context) {
+func GetOnePostFromSub(c *gin.Context) {
 
 	sub := strings.ToLower(c.Param("interface"))
 
 	// Check if the sub is present in the cache
-	memes := g.Cache.GetPostsFromCache(sub)
+	memes := redis.GetPostsFromCache(sub)
 
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that Subreddit
-		freshMemes, res := g.R.GetNPosts(sub, data.RedditPostsLimit)
+		freshMemes, res := reddit.GetNPosts(sub, data.RedditPostsLimit)
 
 		// Check if memes is nil because of error
 		if freshMemes == nil {
@@ -36,7 +38,7 @@ func (g Controller) GetOnePostFromSub(c *gin.Context) {
 		freshMemes = utils.RemoveNonImagePosts(freshMemes)
 
 		// Write sub posts to Cache
-		g.Cache.WritePostsToCache(sub, freshMemes)
+		redis.WritePostsToCache(sub, freshMemes)
 
 		// Set Memes to Fresh Memes
 		memes = freshMemes

@@ -8,13 +8,13 @@ import (
 )
 
 // Redis : Redis structure with client
-type Redis struct {
+var (
 	RedisURL string
-	Client   redis.Client
-}
+	Client   *redis.Client
+)
 
 // Init : Initialize New Redis Connection
-func (r *Redis) Init() {
+func Init() {
 	redisURL := os.Getenv("REDISCLOUD_URL")
 
 	if redisURL == "" {
@@ -34,5 +34,5 @@ func (r *Redis) Init() {
 		log.Fatalln("Error while contacting Redis DB. Please check the Redis Cloud URL.")
 	}
 
-	r.Client = *redisClient
+	Client = redisClient
 }

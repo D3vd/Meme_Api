@@ -5,27 +5,25 @@ import (
 	"log"
 	"net/http"
 
-	"Meme_Api/models/response"
-
 	"Meme_Api/models"
-
 	"Meme_Api/models/reddit"
+	"Meme_Api/models/response"
 )
 
 // GetNPosts : Get (N) no. of posts from Reddit with Subreddit Name and Limit
-func (r *Reddit) GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
+func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 
 	url := GetSubredditAPIURL(subreddit, count)
 
-	body, statusCode := r.MakeGetRequest(url)
+	body, statusCode := MakeGetRequest(url)
 
 	// Check if the access Token has been expired
 	if statusCode == 401 {
 		// Get new access token
-		r.GetNewAccessToken()
+		GetNewAccessToken()
 
 		// Make request Again
-		body, _ = r.MakeGetRequest(url)
+		body, _ = MakeGetRequest(url)
 	}
 
 	// Handle Subreddit Errors for Forbidden and Not Found

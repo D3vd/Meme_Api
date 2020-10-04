@@ -5,24 +5,26 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"Meme_Api/controllers/utils"
 	"Meme_Api/data"
+	"Meme_Api/libraries/reddit"
+	"Meme_Api/libraries/redis"
 	"Meme_Api/models/response"
+	"Meme_Api/utils"
 )
 
 // GetOneRandomMeme : Returns a single meme from a random subreddit
-func (g Controller) GetOneRandomMeme(c *gin.Context) {
+func GetOneRandomMeme(c *gin.Context) {
 
 	// Choose Random Meme Subreddit
 	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
 	// Check if the sub is present in the cache
-	memes := g.Cache.GetPostsFromCache(sub)
+	memes := redis.GetPostsFromCache(sub)
 
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that Subreddit
-		freshMemes, res := g.R.GetNPosts(sub, data.RedditPostsLimit)
+		freshMemes, res := reddit.GetNPosts(sub, data.RedditPostsLimit)
 
 		// Check if memes is nil because of error
 		if freshMemes == nil {
@@ -35,7 +37,7 @@ func (g Controller) GetOneRandomMeme(c *gin.Context) {
 		freshMemes = utils.RemoveNonImagePosts(freshMemes)
 
 		// Write sub posts to Cache
-		g.Cache.WritePostsToCache(sub, freshMemes)
+		redis.WritePostsToCache(sub, freshMemes)
 
 		// Set Memes to Fresh Memes
 		memes = freshMemes

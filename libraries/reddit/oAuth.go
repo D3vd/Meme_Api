@@ -11,9 +11,9 @@ import (
 )
 
 // GetAccessToken : Get temporary Access Token based on App client ID and Secret
-func (r *Reddit) GetAccessToken() (accessToken string) {
+func GetAccessToken() (accessToken string) {
 
-	encodedCredentials := r.EncodeCredentials()
+	encodedCredentials := EncodeCredentials()
 
 	// Reddit URL to get access token
 	url := "https://www.reddit.com/api/v1/access_token"
@@ -24,7 +24,7 @@ func (r *Reddit) GetAccessToken() (accessToken string) {
 	req, _ := http.NewRequest("POST", url, payload)
 
 	// Set Headers including the User Agent and the Authorization with the encoded credentials
-	req.Header.Add("User-Agent", r.UserAgent)
+	req.Header.Add("User-Agent", UserAgent)
 	req.Header.Add("Authorization", "Basic "+encodedCredentials)
 	req.Header.Add("Accept", "*/*")
 	req.Header.Add("Cache-Control", "no-cache")

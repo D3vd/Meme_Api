@@ -4,15 +4,17 @@ import (
 	"net/http"
 	"strconv"
 
-	"Meme_Api/controllers/utils"
 	"Meme_Api/data"
+	"Meme_Api/libraries/reddit"
+	"Meme_Api/libraries/redis"
 	"Meme_Api/models/response"
+	"Meme_Api/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 // GetNRandomMemes : Returns N no. of memes from a random subreddit
-func (g Controller) GetNRandomMemes(c *gin.Context) {
+func GetNRandomMemes(c *gin.Context) {
 
 	count, _ := strconv.Atoi(c.Param("interface"))
 
@@ -25,12 +27,12 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 	sub := data.MemeSubreddits[utils.GetRandomN(len(data.MemeSubreddits))]
 
 	// Check if the sub is present in the cache
-	memes := g.Cache.GetPostsFromCache(sub)
+	memes := redis.GetPostsFromCache(sub)
 
 	// If it is not in Cache then get posts from Reddit
 	if memes == nil {
 		// Get 50 posts from that subreddit
-		freshMemes, res := g.R.GetNPosts(sub, data.RedditPostsLimit)
+		freshMemes, res := reddit.GetNPosts(sub, data.RedditPostsLimit)
 
 		// Check if memes is nil because of error
 		if freshMemes == nil {
@@ -42,7 +44,7 @@ func (g Controller) GetNRandomMemes(c *gin.Context) {
 		freshMemes = utils.RemoveNonImagePosts(freshMemes)
 
 		// Write sub posts to Cache
-		g.Cache.WritePostsToCache(sub, freshMemes)
+		redis.WritePostsToCache(sub, freshMemes)
 
 		// Set Memes to Fresh Memes
 		memes = freshMemes

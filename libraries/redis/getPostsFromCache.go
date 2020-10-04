@@ -7,9 +7,9 @@ import (
 )
 
 // GetPostsFromCache : Get memes from Cache based on sub
-func (r Redis) GetPostsFromCache(sub string) []models.Meme {
+func GetPostsFromCache(sub string) []models.Meme {
 
-	memesBinary, err := r.Client.Get(sub).Bytes()
+	memesBinary, err := Client.Get(sub).Bytes()
 
 	if err != nil {
 		return nil
