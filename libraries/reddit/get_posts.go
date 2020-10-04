@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	rm "Meme_Api/libraries/reddit/models"
 	"Meme_Api/models"
-	"Meme_Api/models/reddit"
 	"Meme_Api/models/response"
 )
 
@@ -45,7 +45,7 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, response.Error) {
 		return nil, res
 	}
 
-	var redditResponse reddit.Response
+	var redditResponse rm.Response
 
 	if err := json.Unmarshal(body, &redditResponse); err != nil {
 		log.Println("Error while Parsing Reddit Response")

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	models "Meme_Api/models/reddit"
+	rm "Meme_Api/libraries/reddit/models"
 )
 
 // GetAccessToken : Get temporary Access Token based on App client ID and Secret
@@ -49,7 +49,7 @@ func GetAccessToken() (accessToken string) {
 	// Read the response
 	body, _ := ioutil.ReadAll(res.Body)
 
-	var accessTokenBody models.AccessTokenBody
+	var accessTokenBody rm.AccessTokenBody
 
 	if err := json.Unmarshal(body, &accessTokenBody); err != nil {
 		log.Println("Error while Unmarshalling AccessTokenBody", err)

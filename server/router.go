@@ -1,7 +1,7 @@
 package server
 
 import (
-	"Meme_Api/controllers/gimme"
+	"Meme_Api/api/gimme"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -18,9 +18,7 @@ func NewRouter() *gin.Engine {
 	gimmeRouter := router.Group("gimme")
 	{
 		gimmeRouter.GET("", gimme.GetOneRandomMeme)
-
 		gimmeRouter.GET("/:interface", gimme.SubredditOrCount)
-
 		gimmeRouter.GET("/:interface/:count", gimme.GetNPostsFromSub)
 	}
 
