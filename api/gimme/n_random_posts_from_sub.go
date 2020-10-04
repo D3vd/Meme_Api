@@ -110,5 +110,4 @@ func GetNPostsFromSub(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, res)
-	return
 }

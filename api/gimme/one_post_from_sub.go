@@ -76,5 +76,4 @@ func GetOnePostFromSub(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, res)
-	return
 }

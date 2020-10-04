@@ -15,6 +15,4 @@ func SubredditOrCount(c *gin.Context) {
 	} else {
 		GetOnePostFromSub(c)
 	}
-
-	return
 }

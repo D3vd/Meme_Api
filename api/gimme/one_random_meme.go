@@ -75,5 +75,4 @@ func GetOneRandomMeme(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, res)
-	return
 }
