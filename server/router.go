@@ -11,16 +11,14 @@ import (
 func NewRouter() *gin.Engine {
 	router := gin.New()
 
+	// Gin and CORS Middlewares
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(cors.Default())
 
+	// /gimme routes
 	gimmeRouter := router.Group("gimme")
-	{
-		gimmeRouter.GET("", gimme.GetOneRandomMeme)
-		gimmeRouter.GET("/:interface", gimme.SubredditOrCount)
-		gimmeRouter.GET("/:interface/:count", gimme.GetNPostsFromSub)
-	}
+	gimme.Routes(gimmeRouter)
 
 	return router
 }
