@@ -2,6 +2,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/d3vd/meme_api/badge)](https://www.codefactor.io/repository/github/d3vd/meme_api)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8df2a02ea3294423adc74bbf0a13356e)](https://www.codacy.com/gh/D3vd/Meme_Api/dashboard?utm_source=github.com&utm_medium=referral&utm_content=D3vd/Meme_Api&utm_campaign=Badge_Grade)
+[![DeepSource](https://deepsource.io/gh/D3vd/Meme_Api.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/D3vd/Meme_Api/?ref=repository-badge)
 
 JSON API for a random meme scraped from reddit.
 
