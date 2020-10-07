@@ -27,6 +27,17 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, rm.CustomRedditError
 		body, statusCode = MakeGetRequest(url)
 	}
 
+	// If Reddit is down return 503 error
+	if statusCode == 500 {
+		res := rm.CustomRedditError{
+			Code:    http.StatusServiceUnavailable,
+			Message: "Reddit is unreachable at the moment",
+		}
+
+		sentry.CaptureMessage("Reddit is Down!!")
+		return nil, res
+	}
+
 	// Handle Subreddit Errors for Forbidden and Not Found
 	if statusCode == 403 {
 		res := rm.CustomRedditError{
