@@ -93,6 +93,7 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, rm.CustomRedditError
 			Ups:       post.Data.Ups,
 			NSFW:      post.Data.Over18,
 			Spoiler:   post.Data.Spoiler,
+			Preview:   post.Data.GetCleanPreviewImages(),
 		}
 
 		memes = append(memes, meme)

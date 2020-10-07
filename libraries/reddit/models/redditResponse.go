@@ -1,5 +1,9 @@
 package models
 
+import (
+	"strings"
+)
+
 // Response : Main container for the Reddit Response
 type Response struct {
 	Kind string   `json:"kind"`
@@ -33,7 +37,7 @@ type Data struct {
 	IsOriginalContent bool        `json:"is_original_content"`
 	Score             int         `json:"score"`
 	Over18            bool        `json:"over_18"`
-	Preview           interface{} `json:"preview"`
+	Preview           Preview     `json:"preview"`
 	Spoiler           bool        `json:"spoiler"`
 	Locked            bool        `json:"locked"`
 	ID                string      `json:"id"`
@@ -42,6 +46,47 @@ type Data struct {
 	CreatedUtc        float64     `json:"created_utc"`
 	Media             interface{} `json:"media"`
 	IsVideo           bool        `json:"is_video"`
+}
+
+// Preview :
+type Preview struct {
+	Images  []PreviewImages `json:"images"`
+	Enabled bool            `json:"enabled"`
+}
+
+// PreviewImages :
+type PreviewImages struct {
+	Source      PreviewImage   `json:"source"`
+	Resolutions []PreviewImage `json:"resolutions"`
+	Variants    interface{}    `json:"variants"`
+	ID          string         `json:"id"`
+}
+
+// PreviewImage :
+type PreviewImage struct {
+	URL    string `json:"url"`
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
+}
+
+// GetCleanPreviewImages : Removes `amp;` from preview image url
+func (d Data) GetCleanPreviewImages() (urls []string) {
+	images := d.Preview.Images
+	var links []string
+
+	if images != nil && len(images) != 0 && images[0].Resolutions != nil && len(images[0].Resolutions) != 0 {
+		for _, r := range images[0].Resolutions {
+			links = append(links, r.URL)
+		}
+	} else {
+		links = append(links, d.URL)
+	}
+
+	for _, l := range links {
+		urls = append(urls, strings.ReplaceAll(l, "amp;", ""))
+	}
+
+	return
 }
 
 // GetShortLink : Get the short URL for the post

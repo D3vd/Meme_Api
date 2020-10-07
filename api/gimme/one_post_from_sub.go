@@ -70,6 +70,7 @@ func GetOnePostFromSub(c *gin.Context) {
 		Spoiler:   meme.Spoiler,
 		Author:    meme.Author,
 		Ups:       meme.Ups,
+		Preview:   meme.Preview,
 	}
 
 	c.JSON(http.StatusOK, res)

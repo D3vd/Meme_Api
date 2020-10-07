@@ -96,6 +96,7 @@ func GetNPostsFromSub(c *gin.Context) {
 			Spoiler:   meme.Spoiler,
 			Author:    meme.Author,
 			Ups:       meme.Ups,
+			Preview:   meme.Preview,
 		}
 
 		memesResponse = append(memesResponse, memeResponse)
