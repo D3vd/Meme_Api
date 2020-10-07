@@ -74,7 +74,7 @@ func (d Data) GetCleanPreviewImages() (urls []string) {
 	images := d.Preview.Images
 	var links []string
 
-	if images != nil && len(images) != 0 && images[0].Resolutions != nil && len(images[0].Resolutions) != 0 {
+	if len(images) != 0 && len(images[0].Resolutions) != 0 {
 		for _, r := range images[0].Resolutions {
 			links = append(links, r.URL)
 		}
