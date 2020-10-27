@@ -10,7 +10,7 @@ API Link : [https://meme-api.herokuapp.com/gimme](https://meme-api.herokuapp.com
 
 **Example Response:**
 
-```json
+```jsonc
 {
   // link to the reddit post
   "postLink": "https://redd.it/jiovfz",
@@ -58,7 +58,7 @@ Example: [https://meme-api.herokuapp.com/gimme/2](https://meme-api.herokuapp.com
 
 Response:
 
-```json
+```jsonc
 {
   // the number of memes requested
   "count": 2,
