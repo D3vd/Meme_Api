@@ -12,28 +12,13 @@ API Link : [https://meme-api.herokuapp.com/gimme](https://meme-api.herokuapp.com
 
 ```jsonc
 {
-  // link to the reddit post
   "postLink": "https://redd.it/jiovfz",
-
-  // subreddit where the post came from
   "subreddit": "dankmemes",
-
-  // post title
   "title": "*leaves call*",
-
-  // high quality meme image
   "url": "https://i.redd.it/f7ibqp1dmiv51.gif",
-
-  // whether the post is NSFW or not
   "nsfw": false,
-
-  // whether the post is a spoiler or not
   "spoiler": false,
-
-  // post author
   "author": "Spartan-Yeet",
-
-  // number of upvotes
   "ups": 3363,
 
   // preview images of the meme sorted from lowest to highest quality
@@ -60,10 +45,7 @@ Response:
 
 ```jsonc
 {
-  // the number of memes requested
   "count": 2,
-
-  // the array of memes
   "memes": [
     {
       "postLink": "https://redd.it/jictqq",
