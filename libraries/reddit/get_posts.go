@@ -57,6 +57,16 @@ func GetNPosts(subreddit string, count int) ([]models.Meme, rm.CustomRedditError
 		return nil, res
 	}
 
+	if statusCode != 200 {
+		res := rm.CustomRedditError{
+			Code:    http.StatusServiceUnavailable,
+			Message: "Unknown error while getting posts. Please try again",
+		}
+
+		sentry.CaptureMessage(string(body))
+		return nil, res
+	}
+
 	var redditResponse rm.Response
 
 	if err := json.Unmarshal(body, &redditResponse); err != nil {
