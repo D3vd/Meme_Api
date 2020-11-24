@@ -1,0 +1,30 @@
+name: Push Docker Image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  login:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+      -
+        name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            d3vd/meme_api:latest
+            d3vd/meme_api:$(git rev-parse --short HEAD)
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
