@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  login:
+  docker:
     runs-on: ubuntu-latest
     steps:
       -
