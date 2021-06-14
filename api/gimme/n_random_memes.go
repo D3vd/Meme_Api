@@ -19,6 +19,14 @@ func GetNRandomMemes(c *gin.Context) {
 
 	count, _ := strconv.Atoi(c.Param("interface"))
 
+    if count <= 0 {
+        c.JSON(http.StatusBadRequest, response.Error{
+            Code: http.StatusBadRequest,
+            Message: "Invalid Count Value",
+        })
+        return
+    }
+
 	// Check if the count is less than 50
 	if count > 50 {
 		count = 50

@@ -23,7 +23,7 @@ func GetNPostsFromSub(c *gin.Context) {
 	sub := strings.ToLower(c.Param("interface"))
 	count, err := strconv.Atoi(c.Param("count"))
 
-	if err != nil {
+	if err != nil || count <= 0 {
 		res := response.Error{
 			Code:    http.StatusBadRequest,
 			Message: "Invalid Count Value",
