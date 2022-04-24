@@ -31,6 +31,8 @@ API Link : [https://meme-api.herokuapp.com/gimme](https://meme-api.herokuapp.com
 }
 ```
 
+Read this written guide for beginner programmers: ["How to use D3vd/Meme_Api with examples (Python, Go, Javascript, C++)"](https://my-tailwind-nextjs-starter-blog.vercel.app/blog/how-to-use-memeapi-with-examples-python-javascript-c-php-go)
+
 ## Custom Endpoints
 
 ### Specify count (MAX 50)
