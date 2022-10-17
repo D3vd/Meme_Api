@@ -31,9 +31,10 @@ API Link : [https://meme-api.herokuapp.com/gimme](https://meme-api.herokuapp.com
 }
 ```
 
-## Custom Endpoints
+## **Custom Endpoints**
 
-### Specify count (MAX 50)
+### Specify count 
+#### (MAX 50)
 
 In order to get multiple memes in a single request specify the count with the following endpoint.
 
