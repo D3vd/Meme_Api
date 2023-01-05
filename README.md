@@ -166,3 +166,9 @@ Response:
   ]
 }
 ```
+
+### Language specific implementations
+
+Python: https://github.com/therealcyber71/redditmemeapi
+Javascript: WIP
+PHP: WIP
