@@ -35,6 +35,8 @@ API Link : [https://meme-api.com/gimme](https://meme-api.com/gimme)
 }
 ```
 
+Read this written guide for beginner programmers: ["How to use D3vd/Meme_Api with examples (Python, Go, Javascript, C++)"](https://my-tailwind-nextjs-starter-blog.vercel.app/blog/how-to-use-memeapi-with-examples-python-javascript-c-php-go)
+
 ## Custom Endpoints
 
 ### Specify count (MAX 50)
