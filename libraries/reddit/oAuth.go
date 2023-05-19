@@ -38,7 +38,7 @@ func GetAccessToken() (accessToken string) {
 	req.Header.Add("Cache-Control", "no-cache")
 	req.Header.Add("Host", "www.reddit.com")
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Add("Accept-Encoding", "gzip, deflate")
+	// req.Header.Add("Accept-Encoding", "gzip, deflate")
 	req.Header.Add("Content-Length", "29")
 	req.Header.Add("Connection", "keep-alive")
 	req.Header.Add("cache-control", "no-cache")
@@ -56,11 +56,18 @@ func GetAccessToken() (accessToken string) {
 	defer res.Body.Close()
 
 	// Read the response
-	body, _ := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		sentry.CaptureException(err)
+		log.Println("Error while reading response body", err)
+		return ""
+	}
 
 	var accessTokenBody rm.AccessTokenBody
 
 	if err := json.Unmarshal(body, &accessTokenBody); err != nil {
+		log.Println(string(body))
 		sentry.CaptureException(err)
 		log.Println("Error while Unmarshalling AccessTokenBody", err)
 		return ""
