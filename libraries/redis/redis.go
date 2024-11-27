@@ -18,7 +18,7 @@ func Init() {
 	redisURL := os.Getenv("REDISCLOUD_URL")
 
 	if redisURL == "" {
-		log.Fatalln("Redis Cloud URL has been set")
+		log.Fatalln("Redis Cloud URL has not been set")
 		return
 	}
 
