@@ -10,7 +10,8 @@ Please update your apps to the new Domain `meme-api.com` to continue using the A
 
 JSON API for a random meme scraped from reddit.
 
-API Link : [https://meme-api.com/gimme](https://meme-api.com/gimme)
+API Link : [https://meme-api.com/gimme](https://meme-api.com/gimme)  
+Interactive Sandbox : [Test live in browser (FreeAPI)](https://findfreeapi.com/en/service/meme-api)
 
 **Example Response:**
 
